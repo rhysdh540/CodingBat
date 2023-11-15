@@ -168,6 +168,9 @@ public class String2 {
 	 * replaced by pluses ("+"), except for appearances of the word string which are preserved unchanged.
 	 */
 	public String plusOut(String str, String word) {
+		//regex: (?!(%s)) matches anything but word
+		// the whole stream thing makes it so it will match anywhere from the middle of the string too (so if word is "xy" then it will match "xy" and "y")
+		// the . at the end is the thing we are replacing with the +
 		return str.replaceAll(String.format("(?!(%s)).",
 				java.util.stream.IntStream.range(0, word.length())
 										  .mapToObj(i -> word.substring(i)

@@ -54,8 +54,8 @@ public class Warmup2 {
 	 * and also as the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring).
 	 */
 	public int last2(String str) {
-		//TODO
-		throw new UnsupportedOperationException();
+		return java.util.stream.IntStream.rangeClosed(0, str.length() - 3)
+										 .map(i -> str.substring(i, i + 2).equals(str.substring(str.length() - 2)) ? 1 : 0).sum();
 	}
 
 	/**

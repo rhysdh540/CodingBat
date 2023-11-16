@@ -98,9 +98,13 @@ public class String3 {
 	 * Given a string, return the length of the largest "block" in the string.
 	 * A block is a run of adjacent chars that are the same.
 	 */
+	@SuppressWarnings("RegExpSuspiciousBackref") //idk how but it works
 	public int maxBlock(String str) {
-		//TODO
-		throw new UnsupportedOperationException();
+		//regex: (?<=(.)) matches anything but a letter before the current letter and captures it into group 1
+		// (?!\1) asserts that the next character is not the same as the one in group 1
+		return Arrays.stream(str.split("(?<=(.))(?!\\1)"))
+				.mapToInt(String::length)
+				.max().orElse(0);
 	}
 
 	/**

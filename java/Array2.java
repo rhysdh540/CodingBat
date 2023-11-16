@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class Array2 {
@@ -247,7 +248,129 @@ public class Array2 {
 	 * So {2, 10, 3, 4, 20, 5} yields {2, 10, 10, 10, 20, 20}.
 	 */
 	public int[] tenRun(int[] nums) {
-		//TODO im tired
-		throw new UnsupportedOperationException();
+		return java.util.stream.IntStream.range(0, nums.length)
+				.map(i -> nums[i] % 10 == 0 ? nums[i] : i > 0 && nums[i - 1] % 10 == 0 ? (nums[i] = nums[i - 1]) : nums[i])
+				.toArray();
+	}
+
+	/**
+	 * Given a non-empty array of ints, return a new array containing the elements from the original array
+	 * that come before the first 4 in the original array.
+	 * The original array will contain at least one 4.
+	 * Note that it is valid in java to create an array of length 0.
+	 */
+	public int[] pre4(int[] nums) {
+		return Arrays.copyOf(nums, Arrays.binarySearch(nums, 4));
+	}
+
+	/**
+	 * Given a non-empty array of ints, return a new array containing the elements from the original array
+	 * that come after the last 4 in the original array.
+	 * The original array will contain at least one 4.
+	 * Note that it is valid in java to create an array of length 0.
+	 */
+	public int[] post4(int[] nums) {
+		//copy from the LAST index of 4 to the end of the array
+		return Arrays.stream(nums) // convert from int[] to IntStream
+					 .boxed() // convert from IntStream to Stream<Integer>
+					 .collect(Collectors.toList()) // convert from Stream<Integer> to List<Integer>
+					 .subList(
+							 Arrays.stream(nums)
+								   .boxed()
+								   .collect(Collectors.toList())
+								   .lastIndexOf(4)
+							 + 1, nums.length) // get the last index of 4
+					 .stream()
+					 .mapToInt(Integer::intValue) // convert back to IntStream
+					 .toArray(); // and back to int[]
+	}
+
+	/**
+	 * We'll say that an element in an array is "alone" if there are values before and after it,
+	 * and those values are different from it.
+	 * Return a version of the given array where every instance of the given value which is alone is replaced by whichever
+	 * value to its left or right is larger.
+	 */
+	public int[] notAlone(int[] nums, int val) {
+		return java.util.stream.IntStream.range(0, nums.length)
+				.map(i -> i != 0 && i != nums.length - 1 && nums[i] == val
+						  && nums[i - 1] != nums[i] && nums[i + 1] != nums[i] ?
+						  Math.max(nums[i - 1], nums[i + 1]) :
+						  nums[i])
+				.toArray();
+	}
+
+	/**
+	 * Return an array that contains the exact same numbers as the given array, but rearranged so that all the zeros are grouped at the start of the array.
+	 * The order of the non-zero numbers does not matter.
+	 * So {1, 0, 0, 1} becomes {0 ,0, 1, 1}.
+	 * You may modify and return the given array or make a new array.
+	 */
+	public int[] zeroFront(int[] nums) {
+		return java.util.stream.IntStream.concat(
+				Arrays.stream(nums).filter(i -> i == 0),
+				Arrays.stream(nums).filter(i -> i != 0))
+										 .toArray();
+	}
+
+	/**
+	 * Return a version of the given array where all the 10's have been removed.
+	 * The remaining elements should shift left towards the start of the array as needed,
+	 * and the empty spaces a the end of the array should be 0.
+	 * So {1, 10, 10, 2} yields {1, 2, 0, 0}.
+	 * You may modify and return the given array or make a new array.
+	 */
+	public int[] withoutTen(int[] nums) {
+		return java.util.stream.IntStream.concat(
+				Arrays.stream(nums).filter(i -> i != 10),
+				java.util.stream.IntStream.generate(() -> 0)
+										  .limit(
+												  Arrays.stream(nums).filter(i -> i == 10).count())
+				   ).toArray();
+	}
+
+	/**
+	 * Return a version of the given array where each zero value in the array is replaced
+	 * by the largest odd value to the right of the zero in the array.
+	 * If there is no odd value to the right of the zero, leave the zero as a zero.
+	 */
+	public int[] zeroMax(int[] nums) {
+		return java.util.stream.IntStream.range(0, nums.length)
+				.map(i -> nums[i] == 0 ?
+						  Arrays.stream(nums)
+								.skip(i).filter(j -> j % 2 != 0)
+								.max().orElse(0) : nums[i])
+				.toArray();
+	}
+
+	/**
+	 * Return an array that contains the exact same numbers as the given array, but rearranged so that all the even numbers come before all the odd numbers.
+	 * Other than that, the numbers can be in any order.
+	 * You may modify and return the given array, or make a new array.
+	 */
+	public int[] evenOdd(int[] nums) {
+		return java.util.stream.IntStream.concat(
+				Arrays.stream(nums).filter(i -> i % 2 == 0),
+				Arrays.stream(nums).filter(i -> i % 2 != 0))
+										 .toArray();
+	}
+
+	/**
+	 * This is slightly more difficult version of the famous FizzBuzz problem
+	 * which is sometimes given as a first problem for job interviews. Consider the series of numbers
+	 * beginning at start and running up to but not including end, so for example start=1 and end=5 gives the series
+	 * 1, 2, 3, 4. Return a new String[] array containing the string form of these numbers, except for multiples of 3,
+	 * use "Fizz" instead of the number, for multiples of 5 use "Buzz", and for multiples of both 3 and 5 use "FizzBuzz".
+	 * In Java, String.valueOf(xxx) will make the String form of an int or other type. This version is
+	 * a little more complicated than the usual version since you have to allocate and index into an array
+	 * instead of just printing, and we vary the start/end instead of just always doing 1..100.
+	 */
+	public String[] fizzBuzz(int start, int end) {
+		return java.util.stream.IntStream.range(start, end)
+				.mapToObj(i -> i % 3 == 0 && i % 5 == 0 ? "FizzBuzz" :
+							   i % 3 == 0 ? "Fizz" :
+							   i % 5 == 0 ? "Buzz" :
+							   String.valueOf(i))
+				.toArray(String[]::new);
 	}
 }

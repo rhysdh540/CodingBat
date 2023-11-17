@@ -100,8 +100,8 @@ public class String3 {
 	 */
 	@SuppressWarnings("RegExpSuspiciousBackref") //idk how but it works
 	public int maxBlock(String str) {
-		//regex: (?<=(.)) matches anything but a letter before the current letter and captures it into group 1
-		// (?!\1) asserts that the next character is not the same as the one in group 1
+		//regex: (?<=(.)) matches any char before the current char and captures it into group 1
+		// (?!\1) asserts that the next char is not the same as the one in group 1
 		return Arrays.stream(str.split("(?<=(.))(?!\\1)"))
 				.mapToInt(String::length)
 				.max().orElse(0);

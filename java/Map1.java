@@ -36,12 +36,15 @@ public class Map1 {
 	 */
 	public Map<String, String> mapAB(Map<String, String> map) {
 		// monstrous one-liner:
-		return map.containsKey("a") && map.containsKey("b")
-			   ? java.util.stream.Stream.concat(
-							 map.entrySet().stream().filter(e -> !"ab".equals(e.getKey())),
-							 Collections.singletonMap("ab", map.get("a") + map.get("b")).entrySet().stream())
-										.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
-			   : map;
+		return !map.containsKey("a") || !map.containsKey("b") ? map :
+			   java.util.stream.Stream
+					   .concat(map.entrySet()
+								  .stream()
+								  .filter(e -> !"ab".equals(e.getKey())),
+							   Collections.singletonMap("ab", map.get("a") + map.get("b"))
+										  .entrySet()
+										  .stream())
+					   .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 		/* or just:
 		if(map.containsKey("a") && map.containsKey("b"))
 			map.put("ab", map.get("a") + map.get("b"));

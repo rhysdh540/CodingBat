@@ -46,7 +46,8 @@ public class Warmup2 {
 	 * Given a non-empty string like "Code" return a string like "CCoCodCode".
 	 */
 	public String stringSplosion(String str) {
-		return java.util.stream.IntStream.rangeClosed(1, str.length()).mapToObj(i -> str.substring(0, i)).collect(Collectors.joining());
+		return java.util.stream.IntStream.rangeClosed(1, str.length())
+										 .mapToObj(i -> str.substring(0, i)).collect(Collectors.joining());
 	}
 
 	/**
@@ -55,7 +56,10 @@ public class Warmup2 {
 	 */
 	public int last2(String str) {
 		return java.util.stream.IntStream.rangeClosed(0, str.length() - 3)
-										 .map(i -> str.substring(i, i + 2).equals(str.substring(str.length() - 2)) ? 1 : 0).sum();
+										 .map(i -> str.substring(i, i + 2)
+													  .equals(str.substring(str.length() - 2))
+												   ? 1 : 0)
+										 .sum();
 	}
 
 	/**

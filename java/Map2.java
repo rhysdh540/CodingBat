@@ -91,8 +91,21 @@ public class Map2 {
 	 * anything. Using a map, this can be solved making just one pass over the array. More difficult than it looks.
 	 */
 	public String[] allSwap(String[] strings) {
-		//TODO
-		return null;
+		//TODO make this work
+		Map<Character, Integer> map = new HashMap<>();
+		for(int i = 0; i < strings.length; i++) {
+			char c = strings[i].charAt(0);
+			if(map.containsKey(c) && map.get(c) >= 0){
+				int temp = map.put(c, -1);
+				String tempString = strings[i];
+				strings[i] = strings[temp];
+				strings[temp] = tempString;
+			} else {
+				if(!map.containsKey(c))
+					map.put(c, i);
+			}
+		}
+		return strings;
 	}
 
 	/**

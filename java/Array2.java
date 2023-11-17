@@ -46,14 +46,16 @@ public class Array2 {
 	 * (every 6 will be followed by at least one 7). Return 0 for no numbers.
 	 */
 	public int sum67(int[] nums) {
-		//TODO shorten
-		int sum = 0;
-		boolean ignore = false;
-		for(int num : nums) {
-			sum += (ignore |= num == 6) ? 0 : num;
-			ignore &= num != 7;
-		}
-		return sum;
+		return Arrays.stream(
+				String.join(" ",
+						Arrays.stream(nums)
+							  .mapToObj(String::valueOf)
+							  .collect(Collectors.joining(" "))
+							  .split("( )?6(.*?)7( )?"))
+						.split(" ")
+					 )
+					 .mapToInt(s -> s.isEmpty() ? 0 : Integer.parseInt(s))
+					 .sum();
 	}
 
 	/**

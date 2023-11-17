@@ -13,7 +13,7 @@ public class Recursion2 {
 	 * progress down the array.
 	 */
 	public boolean groupSum(int start, int[] nums, int target) {
-		if (start >= nums.length)
+		if(start >= nums.length)
 			return target == 0;
 		return groupSum(start + 1, nums, target - nums[start]) || groupSum(start + 1, nums, target);
 	}
@@ -24,9 +24,9 @@ public class Recursion2 {
 	 * that all 6's must be chosen. (No loops needed.)
 	 */
 	public boolean groupSum6(int start, int[] nums, int target) {
-		if (start >= nums.length)
+		if(start >= nums.length)
 			return target == 0;
-		if (nums[start] == 6)
+		if(nums[start] == 6)
 			return groupSum6(start + 1, nums, target - nums[start]);
 		return groupSum6(start + 1, nums, target - nums[start]) || groupSum6(start + 1, nums, target);
 	}
@@ -37,7 +37,7 @@ public class Recursion2 {
 	 * in the group, the value immediately following it in the array must not be chosen. (No loops needed.)
 	 */
 	public boolean groupNoAdj(int start, int[] nums, int target) {
-		if (start >= nums.length)
+		if(start >= nums.length)
 			return target == 0;
 		return groupNoAdj(start + 2, nums, target - nums[start]) || groupNoAdj(start + 1, nums, target);
 	}
@@ -49,10 +49,10 @@ public class Recursion2 {
 	 * be chosen. (No loops needed.)
 	 */
 	public boolean groupSum5(int start, int[] nums, int target) {
-		if (start >= nums.length)
+		if(start >= nums.length)
 			return target == 0;
-		if (nums[start] % 5 == 0) {
-			if (start < nums.length - 1 && nums[start + 1] == 1)
+		if(nums[start] % 5 == 0) {
+			if(start < nums.length - 1 && nums[start + 1] == 1)
 				return groupSum5(start + 2, nums, target - nums[start]);
 			return groupSum5(start + 1, nums, target - nums[start]);
 		}
@@ -67,10 +67,10 @@ public class Recursion2 {
 	 * not, all as a group. (one loop can be used to find the extent of the identical values).
 	 */
 	public boolean groupSumClump(int start, int[] nums, int target) {
-		if (start >= nums.length)
+		if(start >= nums.length)
 			return target == 0;
 		int i = start;
-		for (; i < nums.length && nums[i] == nums[start]; i++);
+		for(; i < nums.length && nums[i] == nums[start]; i++);
 		return groupSumClump(i, nums, target - ((i - start) * nums[start])) || groupSumClump(i, nums, target);
 	}
 
@@ -85,7 +85,7 @@ public class Recursion2 {
 	}
 
 	private boolean splitArray0(int start, int[] nums, int sum1, int sum2) {
-		if (start >= nums.length)
+		if(start >= nums.length)
 			return sum1 == sum2;
 		return splitArray0(start + 1, nums, sum1 + nums[start], sum2) || splitArray0(start + 1, nums, sum1, sum2 + nums[start]);
 	}
@@ -101,7 +101,7 @@ public class Recursion2 {
 	}
 
 	private boolean splitOdd100(int start, int[] nums, int sum1, int sum2) {
-		if (start >= nums.length)
+		if(start >= nums.length)
 			return (sum1 % 10 == 0 && sum2 % 2 == 1) || (sum1 % 2 == 1 && sum2 % 10 == 0);
 		return splitOdd100(start + 1, nums, sum1 + nums[start], sum2) || splitOdd100(start + 1, nums, sum1, sum2 + nums[start]);
 	}
@@ -117,11 +117,11 @@ public class Recursion2 {
 	}
 
 	private boolean split530(int start, int[] nums, int sum1, int sum2) {
-		if (start >= nums.length)
+		if(start >= nums.length)
 			return sum1 == sum2;
-		if (nums[start] % 5 == 0)
+		if(nums[start] % 5 == 0)
 			return split530(start + 1, nums, sum1 + nums[start], sum2);
-		if (nums[start] % 3 == 0)
+		if(nums[start] % 3 == 0)
 			return split530(start + 1, nums, sum1, sum2 + nums[start]);
 		return split530(start + 1, nums, sum1 + nums[start], sum2) || split530(start + 1, nums, sum1, sum2 + nums[start]);
 	}

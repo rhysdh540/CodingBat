@@ -13,7 +13,7 @@ public class Map1 {
 	 * taking the value and replacing it with the empty string.
 	 */
 	public Map<String, String> mapBully(Map<String, String> map) {
-		if (map.containsKey("a"))
+		if(map.containsKey("a"))
 			map.put("b", map.put("a", ""));
 		return map;
 	}
@@ -24,7 +24,7 @@ public class Map1 {
 	 * leaving the rest of the map unchanged.
 	 */
 	public Map<String, String> mapShare(Map<String, String> map) {
-		if (map.containsKey("a"))
+		if(map.containsKey("a"))
 			map.put("b", map.get("a"));
 		map.remove("c");
 		return map;
@@ -43,7 +43,7 @@ public class Map1 {
 										.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue))
 			   : map;
 		/* or just:
-		if (map.containsKey("a") && map.containsKey("b"))
+		if(map.containsKey("a") && map.containsKey("b"))
 			map.put("ab", map.get("a") + map.get("b"));
 		return map;
 		 */
@@ -55,7 +55,7 @@ public class Map1 {
 	 * In all cases, set the key "bread" to have the value "butter".
 	 */
 	public Map<String, String> topping1(Map<String, String> map) {
-		if (map.containsKey("ice cream"))
+		if(map.containsKey("ice cream"))
 			map.put("ice cream", "cherry");
 		map.put("bread", "butter");
 		return map;
@@ -67,9 +67,9 @@ public class Map1 {
 	 * If the key "spinach" has a value, change that value to "nuts".
 	 */
 	public Map<String, String> topping2(Map<String, String> map) {
-		if (map.containsKey("ice cream"))
+		if(map.containsKey("ice cream"))
 			map.put("yogurt", map.get("ice cream"));
-		if (map.containsKey("spinach"))
+		if(map.containsKey("spinach"))
 			map.put("spinach", "nuts");
 		return map;
 	}
@@ -80,9 +80,9 @@ public class Map1 {
 	 * If the key "salad" has a value, set that as the value for the key "spinach".
 	 */
 	public Map<String, String> topping3(Map<String, String> map) {
-		if (map.containsKey("potato"))
+		if(map.containsKey("potato"))
 			map.put("fries", map.get("potato"));
-		if (map.containsKey("salad"))
+		if(map.containsKey("salad"))
 			map.put("spinach", map.get("salad"));
 		return map;
 	}
@@ -92,7 +92,7 @@ public class Map1 {
 	 * remove them both.
 	 */
 	public Map<String, String> mapAB2(Map<String, String> map) {
-		if (map.get("a") != null && map.get("a").equals(map.get("b"))) {
+		if(map.get("a") != null && map.get("a").equals(map.get("b"))) {
 			map.remove("a");
 			map.remove("b");
 		}
@@ -104,7 +104,7 @@ public class Map1 {
 	 * (but not both), set the other to have that same value in the map.
 	 */
 	public Map<String, String> mapAB3(Map<String, String> map) {
-		if (map.containsKey("a") ^ map.containsKey("b")) {
+		if(map.containsKey("a") ^ map.containsKey("b")) {
 			map.put(map.containsKey("a") ? "b" : "a", map.get(map.containsKey("a") ? "a" : "b"));
 		}
 		return map;
@@ -116,9 +116,9 @@ public class Map1 {
 	 * change them both to the empty string in the map.
 	 */
 	public Map<String, String> mapAB4(Map<String, String> map) {
-		if (map.containsKey("a") && map.containsKey("b")) {
+		if(map.containsKey("a") && map.containsKey("b")) {
 			String a = map.get("a"), b = map.get("b");
-			if (a.length() != b.length())
+			if(a.length() != b.length())
 				map.put("c", a.length() > b.length() ? a : b);
 			else {
 				map.put("a", "");

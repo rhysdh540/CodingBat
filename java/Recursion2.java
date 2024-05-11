@@ -70,7 +70,7 @@ public class Recursion2 {
 		if(start >= nums.length)
 			return target == 0;
 		int i = start;
-		for(; i < nums.length && nums[i] == nums[start]; i++);
+		for(; i < nums.length && nums[i] == nums[start]; i++) ;
 		return groupSumClump(i, nums, target - ((i - start) * nums[start])) || groupSumClump(i, nums, target);
 	}
 

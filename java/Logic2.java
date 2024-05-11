@@ -6,6 +6,7 @@ public class Logic2 {
 	 * We want to make a row of bricks that is goal inches long. We have a number of small bricks (1 inch each)
 	 * and big bricks (5 inches each). Return true if it is possible to make the goal by choosing from the given bricks.
 	 * This is a little harder than it looks and can be done without any loops.
+	 *
 	 * @see <a href="https://codingbat.com/doc/practice/makebricks-introduction.html">Introduction to MakeBricks</a>
 	 */
 	public boolean makeBricks(int small, int big, int goal) {
@@ -18,8 +19,8 @@ public class Logic2 {
 	 */
 	public int loneSum(int a, int b, int c) {
 		return Arrays.stream(new int[]{a, b, c}).filter(i ->
-				Arrays.stream(new int[]{a, b, c}).filter(j -> i == j).count() == 1)
-					 .sum();
+						Arrays.stream(new int[]{a, b, c}).filter(j -> i == j).count() == 1)
+				.sum();
 	}
 
 	/**
@@ -29,8 +30,8 @@ public class Logic2 {
 	 */
 	public int luckySum(int a, int b, int c) {
 		return a == 13 ? 0
-					   : b == 13 ? a
-						 : (c == 13 ? (a + b) : (a + b + c));
+				: b == 13 ? a
+				: (c == 13 ? (a + b) : (a + b + c));
 	}
 
 	/**
@@ -41,10 +42,15 @@ public class Logic2 {
 	 * In this way, you avoid repeating the teen code 3 times (i.e. "decomposition").
 	 * Define the helper below and at the same indent level as the main noTeenSum().
 	 */
-	public int noTeenSum(int a, int b, int c) { // imagine writing a helper function
+	public int noTeenSum(int a, int b, int c) {
 		return Arrays.stream(new int[]{a, b, c})
-					 .filter(i -> i == 15 || i == 16 || i < 13 || i > 19)
-					 .sum();
+				.map(this::fixTeen)
+				.sum();
+	}
+
+	// required helper method - can be replaced with `.filter(i -> i == 15 || i == 16 || i < 13 || i > 19)` if you prefer
+	public int fixTeen(int n) {
+		return n == 15 || n == 16 || n < 13 || n > 19 ? n : 0;
 	}
 
 	/**
@@ -56,8 +62,13 @@ public class Logic2 {
 	 */
 	public int roundSum(int a, int b, int c) {
 		return Arrays.stream(new int[]{a, b, c})
-					 .map(i -> 10 * (i % 10 >= 5 ? i + 10 : i) / 10)
-					 .sum();
+				.map(this::round10)
+				.sum();
+	}
+
+	// required helper method - can be inlined if you prefer
+	public int round10(int i) {
+		return 10 * ((i % 10 >= 5 ? (i + 10) : i) / 10);
 	}
 
 	/**
@@ -88,9 +99,9 @@ public class Logic2 {
 	 */
 	public boolean evenlySpaced(int a, int b, int c) {
 		return (a == b) == (b == c) &&
-			   ((Math.abs(a - b) == Math.abs(b - c))
-				|| (Math.abs(a - b) == Math.abs(a - c))
-				|| (Math.abs(c - b) == Math.abs(a - c)));
+				((Math.abs(a - b) == Math.abs(b - c))
+			  || (Math.abs(a - b) == Math.abs(a - c))
+			  || (Math.abs(c - b) == Math.abs(a - c)));
 	}
 
 	/**
@@ -99,10 +110,8 @@ public class Logic2 {
 	 * Return -1 if it can't be done.
 	 */
 	public int makeChocolate(int small, int big, int goal) {
-		return goal > big * 5 + small || goal % 5 > small
-			   ? -1
-			   : goal < 10
-				 ? goal % 5
-				 : goal - (big * 5);
+		return goal > big * 5 + small || goal % 5 > small ? -1
+				: goal < 10 ? goal % 5
+				: goal - (big * 5);
 	}
 }

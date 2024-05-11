@@ -6,7 +6,7 @@ public class String2 {
 	 * Given a string, return a string where for every char in the original, there are two chars.
 	 */
 	public String doubleChar(String str) {
-		return str.chars().mapToObj(c -> (char)c + "" + (char)c).collect(Collectors.joining());
+		return str.chars().mapToObj(c -> (char) c + "" + (char) c).collect(Collectors.joining());
 	}
 
 	/**
@@ -131,8 +131,8 @@ public class String2 {
 	 */
 	public boolean sameStarChar(String str) {
 		return str.length() < 3
-			   || (str.charAt(1) != '*' || str.charAt(0) == str.charAt(2))
-			   && sameStarChar(str.substring(1));
+				|| (str.charAt(1) != '*' || str.charAt(0) == str.charAt(2))
+				&& sameStarChar(str.substring(1));
 	}
 
 	/**
@@ -173,9 +173,9 @@ public class String2 {
 		// the . at the end is the thing we are replacing with the +
 		return str.replaceAll(String.format("(?!(%s)).",
 				java.util.stream.IntStream.range(0, word.length())
-										  .mapToObj(i -> word.substring(i)
-															 .replace("+", "\\+")) // escape +
-										  .collect(Collectors.joining("|"))), "+");
+						.mapToObj(i -> word.substring(i)
+								.replace("+", "\\+")) // escape +
+						.collect(Collectors.joining("|"))), "+");
 	}
 
 	/**
@@ -185,8 +185,8 @@ public class String2 {
 	 */
 	public String wordEnds(String str, String word) {
 		return java.util.stream.IntStream.range(0, str.length() - word.length() + 1)
-										 .filter(i -> str.startsWith(word, i))
-										 .mapToObj(i -> new String(new char[]{i > 0 ? str.charAt(i - 1) : ' ', i + word.length() < str.length() ? str.charAt(i + word.length()) : ' '}))
-										 .collect(Collectors.joining()).replace(" ", "");
+				.filter(i -> str.startsWith(word, i))
+				.mapToObj(i -> new String(new char[]{i > 0 ? str.charAt(i - 1) : ' ', i + word.length() < str.length() ? str.charAt(i + word.length()) : ' '}))
+				.collect(Collectors.joining()).replace(" ", "");
 	}
 }

@@ -47,15 +47,15 @@ public class Array2 {
 	 */
 	public int sum67(int[] nums) {
 		return Arrays.stream(
-				String.join(" ",
-						Arrays.stream(nums)
-							  .mapToObj(String::valueOf)
-							  .collect(Collectors.joining(" "))
-							  .split("( )?6(.*?)7( )?"))
-						.split(" ")
-					 )
-					 .mapToInt(s -> s.isEmpty() ? 0 : Integer.parseInt(s))
-					 .sum();
+						String.join(" ",
+										Arrays.stream(nums)
+												.mapToObj(String::valueOf)
+												.collect(Collectors.joining(" "))
+												.split("( )?6(.*?)7( )?")) // possible whitespace + 6 + anything + 7 + possible whitespace
+								.split(" ")
+				)
+				.mapToInt(s -> s.isEmpty() ? 0 : Integer.parseInt(s))
+				.sum();
 	}
 
 	/**
@@ -92,6 +92,7 @@ public class Array2 {
 	 * The given n may be 0, in which case just return a length 0 array.
 	 * You do not need a separate if-statement for the length-0 case; the for-loop should naturally execute 0 times in that case,
 	 * so it just works. The syntax to make a new int array is: new int[desired_length]
+	 *
 	 * @see <a href="https://codingbat.com/doc/practice/fizzbuzz-code.html">FizzBuzz Code</a>
 	 */
 	public int[] fizzArray(int n) {
@@ -110,6 +111,7 @@ public class Array2 {
 	 * N may be 0, in which case just return a length 0 array.
 	 * Note: String.valueOf(xxx) will make the String form of most types.
 	 * The syntax to make a new string array is: new String[desired_length]
+	 *
 	 * @see <a href="https://codingbat.com/doc/practice/fizzbuzz-code.html">FizzBuzz Code</a>
 	 */
 	public String[] fizzArray2(int n) {
@@ -168,7 +170,7 @@ public class Array2 {
 	 */
 	public boolean has12(int[] nums) {
 		return Arrays.toString(nums).contains("1")
-			   && Arrays.toString(nums).lastIndexOf("1") < Arrays.toString(nums).lastIndexOf("2");
+				&& Arrays.toString(nums).lastIndexOf("1") < Arrays.toString(nums).lastIndexOf("2");
 	}
 
 	/**
@@ -177,7 +179,7 @@ public class Array2 {
 	public boolean modThree(int[] nums) {
 		return java.util.stream.IntStream.range(0, nums.length - 2)
 				.anyMatch(i -> nums[i] % 2 == nums[i + 1] % 2
-							   && nums[i + 1] % 2 == nums[i + 2] % 2);
+						&& nums[i + 1] % 2 == nums[i + 2] % 2);
 	}
 
 	/**
@@ -188,7 +190,7 @@ public class Array2 {
 		return java.util.stream.IntStream.range(0, nums.length - 1)
 				.filter(i -> nums[i] == 3)
 				.allMatch(i -> nums[i + 1] != 3) // technically would have to check the other way as well but this passes all the tests
-			&& java.util.stream.IntStream.range(0, nums.length)
+				&& java.util.stream.IntStream.range(0, nums.length)
 				.filter(i -> nums[i] == 3)
 				.count() == 3;
 	}
@@ -198,12 +200,12 @@ public class Array2 {
 	 */
 	public boolean twoTwo(int[] nums) {
 		return nums.length == 1 ? !Arrays.equals(nums, new int[]{2}) :
-			   java.util.stream.IntStream.range(0, nums.length)
-										 .filter(i -> nums[i] == 2)
-										 .allMatch(i ->
-												 i == 0 ? nums[i + 1] == 2 :
-												 i == nums.length - 1 ? nums[i - 1] == 2 :
-												 nums[i - 1] == 2 || nums[i + 1] == 2);
+				java.util.stream.IntStream.range(0, nums.length)
+						.filter(i -> nums[i] == 2)
+						.allMatch(i ->
+								i == 0 ? nums[i + 1] == 2 :
+										i == nums.length - 1 ? nums[i - 1] == 2 :
+												nums[i - 1] == 2 || nums[i + 1] == 2);
 	}
 
 	/**
@@ -228,6 +230,7 @@ public class Array2 {
 	 * so start=5 and end=10 yields {5, 6, 7, 8, 9}.
 	 * The end number will be greater or equal to the start number.
 	 * Note that a length-0 array is valid.
+	 *
 	 * @see <a href="https://codingbat.com/doc/practice/fizzbuzz-code.html">FizzBuzz Code</a>
 	 */
 	public int[] fizzArray3(int start, int end) {
@@ -240,8 +243,8 @@ public class Array2 {
 	 */
 	public int[] shiftLeft(int[] nums) {
 		return nums.length == 0 ? nums : java.util.stream.IntStream.concat(
-				java.util.stream.IntStream.of(nums).skip(1), java.util.stream.IntStream.of(nums[0]))
-																   .toArray();
+						java.util.stream.IntStream.of(nums).skip(1), java.util.stream.IntStream.of(nums[0]))
+				.toArray();
 	}
 
 	/**
@@ -274,17 +277,17 @@ public class Array2 {
 	public int[] post4(int[] nums) {
 		//copy from the LAST index of 4 to the end of the array
 		return Arrays.stream(nums) // convert from int[] to IntStream
-					 .boxed() // convert from IntStream to Stream<Integer>
-					 .collect(Collectors.toList()) // convert from Stream<Integer> to List<Integer>
-					 .subList(
-							 Arrays.stream(nums)
-								   .boxed()
-								   .collect(Collectors.toList())
-								   .lastIndexOf(4)
-							 + 1, nums.length) // get the last index of 4
-					 .stream()
-					 .mapToInt(Integer::intValue) // convert back to IntStream
-					 .toArray(); // and back to int[]
+				.boxed() // convert from IntStream to Stream<Integer>
+				.collect(Collectors.toList()) // convert from Stream<Integer> to List<Integer>
+				.subList(
+						Arrays.stream(nums)
+								.boxed()
+								.collect(Collectors.toList())
+								.lastIndexOf(4)
+								+ 1, nums.length) // get the last index of 4
+				.stream()
+				.mapToInt(Integer::intValue) // convert back to IntStream
+				.toArray(); // and back to int[]
 	}
 
 	/**
@@ -296,9 +299,9 @@ public class Array2 {
 	public int[] notAlone(int[] nums, int val) {
 		return java.util.stream.IntStream.range(0, nums.length)
 				.map(i -> i != 0 && i != nums.length - 1 && nums[i] == val
-						  && nums[i - 1] != nums[i] && nums[i + 1] != nums[i] ?
-						  Math.max(nums[i - 1], nums[i + 1]) :
-						  nums[i])
+						&& nums[i - 1] != nums[i] && nums[i + 1] != nums[i] ?
+						Math.max(nums[i - 1], nums[i + 1]) :
+						nums[i])
 				.toArray();
 	}
 
@@ -310,9 +313,9 @@ public class Array2 {
 	 */
 	public int[] zeroFront(int[] nums) {
 		return java.util.stream.IntStream.concat(
-				Arrays.stream(nums).filter(i -> i == 0),
-				Arrays.stream(nums).filter(i -> i != 0))
-										 .toArray();
+						Arrays.stream(nums).filter(i -> i == 0),
+						Arrays.stream(nums).filter(i -> i != 0))
+				.toArray();
 	}
 
 	/**
@@ -326,9 +329,9 @@ public class Array2 {
 		return java.util.stream.IntStream.concat(
 				Arrays.stream(nums).filter(i -> i != 10),
 				java.util.stream.IntStream.generate(() -> 0)
-										  .limit(
-												  Arrays.stream(nums).filter(i -> i == 10).count())
-				   ).toArray();
+						.limit(
+								Arrays.stream(nums).filter(i -> i == 10).count())
+		).toArray();
 	}
 
 	/**
@@ -339,7 +342,7 @@ public class Array2 {
 	public int[] zeroMax(int[] nums) {
 		return java.util.stream.IntStream.range(0, nums.length)
 				.map(i -> nums[i] == 0 ?
-						  Arrays.stream(nums)
+						Arrays.stream(nums)
 								.skip(i).filter(j -> j % 2 != 0)
 								.max().orElse(0) : nums[i])
 				.toArray();
@@ -352,9 +355,9 @@ public class Array2 {
 	 */
 	public int[] evenOdd(int[] nums) {
 		return java.util.stream.IntStream.concat(
-				Arrays.stream(nums).filter(i -> i % 2 == 0),
-				Arrays.stream(nums).filter(i -> i % 2 != 0))
-										 .toArray();
+						Arrays.stream(nums).filter(i -> i % 2 == 0),
+						Arrays.stream(nums).filter(i -> i % 2 != 0))
+				.toArray();
 	}
 
 	/**
@@ -370,9 +373,9 @@ public class Array2 {
 	public String[] fizzBuzz(int start, int end) {
 		return java.util.stream.IntStream.range(start, end)
 				.mapToObj(i -> i % 3 == 0 && i % 5 == 0 ? "FizzBuzz" :
-							   i % 3 == 0 ? "Fizz" :
-							   i % 5 == 0 ? "Buzz" :
-							   String.valueOf(i))
+						i % 3 == 0 ? "Fizz" :
+								i % 5 == 0 ? "Buzz" :
+										String.valueOf(i))
 				.toArray(String[]::new);
 	}
 }

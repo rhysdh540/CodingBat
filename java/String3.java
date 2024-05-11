@@ -116,9 +116,9 @@ public class String3 {
 	public int sumNumbers(String str) {
 		//regex: splits the string into numbers
 		return Arrays.stream(str.split("[^0-9]+"))
-					 .filter(s -> !s.isEmpty())
-					 .mapToInt(Integer::parseInt)
-					 .sum();
+				.filter(s -> !s.isEmpty())
+				.mapToInt(Integer::parseInt)
+				.sum();
 	}
 
 	/**

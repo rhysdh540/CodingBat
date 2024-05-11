@@ -68,8 +68,8 @@ public class Recursion1 {
 	 */
 	public int count8(int n) {
 		return n == 0 ? 0 :
-			   (n % 10 == 8 ? ((n / 10) % 10 == 8 ? 2 : 1)
-							: 0) + count8(n / 10);
+				(n % 10 == 8 ? ((n / 10) % 10 == 8 ? 2 : 1)
+						: 0) + count8(n / 10);
 	}
 
 	/**
@@ -107,7 +107,8 @@ public class Recursion1 {
 	 */
 	public String changePi(String str) {
 		return str.length() < 2 ? str :
-			   (str.startsWith("pi") ? "3.14" : str.charAt(0)) + changePi(str.substring(str.startsWith("pi") ? 2 : 1));
+				(str.startsWith("pi") ? "3.14" : str.charAt(0)) + changePi(str.substring(str.startsWith("pi") ? 2 : 1));
+		// return str.replace("pi", "3.14");
 	}
 
 	/**
@@ -158,7 +159,7 @@ public class Recursion1 {
 	 */
 	public String pairStar(String str) {
 		return str.length() < 2 ? str :
-			   (str.charAt(0) == str.charAt(1) ? str.charAt(0) + "*" : str.charAt(0)) + pairStar(str.substring(1));
+				(str.charAt(0) == str.charAt(1) ? str.charAt(0) + "*" : str.charAt(0)) + pairStar(str.substring(1));
 	}
 
 	/**
@@ -167,7 +168,7 @@ public class Recursion1 {
 	 */
 	public String endX(String str) {
 		return str.isEmpty() ? "" :
-			   (str.charAt(0) == 'x' ? "" : str.charAt(0)) + endX(str.substring(1)) + (str.charAt(0) == 'x' ? "x" : "");
+				(str.charAt(0) == 'x' ? "" : str.charAt(0)) + endX(str.substring(1)) + (str.charAt(0) == 'x' ? "x" : "");
 	}
 
 	/**
@@ -177,7 +178,7 @@ public class Recursion1 {
 	 */
 	public int countPairs(String str) {
 		return str.length() < 3 ? 0 :
-			   (str.charAt(0) == str.charAt(2) ? 1 : 0) + countPairs(str.substring(1));
+				(str.charAt(0) == str.charAt(2) ? 1 : 0) + countPairs(str.substring(1));
 	}
 
 	/**
@@ -185,7 +186,7 @@ public class Recursion1 {
 	 */
 	public int countAbc(String str) {
 		return str.length() < 3 ? 0 :
-			   (str.matches("(abc|aba).*") ? 1 : 0) + countAbc(str.substring(1));
+				(str.matches("(abc|aba).*") ? 1 : 0) + countAbc(str.substring(1));
 	}
 
 	/**
@@ -194,7 +195,7 @@ public class Recursion1 {
 	 */
 	public int count11(String str) {
 		return str.length() < 2 ? 0 :
-			   (str.startsWith("11") ? 1 : 0) + count11(str.substring(str.startsWith("11") ? 2 : 1));
+				(str.startsWith("11") ? 1 : 0) + count11(str.substring(str.startsWith("11") ? 2 : 1));
 	}
 
 	/**
@@ -203,7 +204,7 @@ public class Recursion1 {
 	 */
 	public String stringClean(String str) {
 		return str.length() < 2 ? str :
-			   (str.charAt(0) == str.charAt(1) ? "" : str.charAt(0)) + stringClean(str.substring(1));
+				(str.charAt(0) == str.charAt(1) ? "" : str.charAt(0)) + stringClean(str.substring(1));
 	}
 
 	/**
@@ -212,7 +213,7 @@ public class Recursion1 {
 	 */
 	public int countHi2(String str) {
 		return str.length() < 2 ? 0 :
-			   (str.startsWith("hi") ? 1 : 0) + countHi2(str.substring(str.startsWith("xhi") ? 3 : 1));
+				(str.startsWith("hi") ? 1 : 0) + countHi2(str.substring(str.startsWith("xhi") ? 3 : 1));
 	}
 
 	/**
@@ -221,7 +222,7 @@ public class Recursion1 {
 	 */
 	public String parenBit(String str) { // was this problem made to confuse us with parenthesis
 		return str.length() < 2 ? str :
-			   (str.charAt(0) == '(' ? str.substring(0, str.indexOf(')') + 1) : parenBit(str.substring(1)));
+				(str.charAt(0) == '(' ? str.substring(0, str.indexOf(')') + 1) : parenBit(str.substring(1)));
 	}
 
 	/**
@@ -230,9 +231,9 @@ public class Recursion1 {
 	 */
 	public boolean nestParen(String str) {
 		return str.isEmpty() ||
-			   str.charAt(0) == '('
-			   		&& str.charAt(str.length() - 1) == ')'
-			   		&& nestParen(str.substring(1, str.length() - 1));
+				str.charAt(0) == '('
+						&& str.charAt(str.length() - 1) == ')'
+						&& nestParen(str.substring(1, str.length() - 1));
 	}
 
 	/**
@@ -241,7 +242,7 @@ public class Recursion1 {
 	 */
 	public int strCount(String str, String sub) {
 		return str.length() < sub.length() ? 0 :
-			   (str.startsWith(sub) ? 1 : 0) + strCount(str.substring(str.startsWith(sub) ? sub.length() : 1), sub);
+				(str.startsWith(sub) ? 1 : 0) + strCount(str.substring(str.startsWith(sub) ? sub.length() : 1), sub);
 	}
 
 	/**
@@ -250,7 +251,7 @@ public class Recursion1 {
 	 */
 	public boolean strCopies(String str, String sub, int n) {
 		return str.length() < sub.length() ? n <= 0 :
-			   (str.startsWith(sub) ? strCopies(str.substring(1), sub, n - 1) : strCopies(str.substring(1), sub, n));
+				(str.startsWith(sub) ? strCopies(str.substring(1), sub, n - 1) : strCopies(str.substring(1), sub, n));
 	}
 
 	/**
@@ -259,11 +260,11 @@ public class Recursion1 {
 	 */
 	public int strDist(String str, String sub) {
 		return str.length() < sub.length()
-			   ? 0
-			   : str.startsWith(sub) && str.endsWith(sub)
-				 ? str.length()
-				 : strDist(str.startsWith(sub)
-						   ? str.substring(0, str.length() - 1)
-						   : str.substring(1), sub);
+				? 0
+				: str.startsWith(sub) && str.endsWith(sub)
+				? str.length()
+				: strDist(str.startsWith(sub)
+				? str.substring(0, str.length() - 1)
+				: str.substring(1), sub);
 	}
 }

@@ -1,5 +1,5 @@
-import java.util.stream.Collectors;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @SuppressWarnings({"unused"})
 public class Warmup2 {
@@ -7,7 +7,7 @@ public class Warmup2 {
 	 * Given a string and a non-negative int n, return a larger string that is n copies of the original string.
 	 */
 	public String stringTimes(String str, int n) {
-		//'\0' is the null character
+		//'\0' is the null character/default value for char
 		return new String(new char[n]).replace("\0", str);
 	}
 
@@ -23,6 +23,7 @@ public class Warmup2 {
 	 * Count the number of "xx" in the given string. We'll say that overlapping is allowed, so "xxx" contains 2 "xx".
 	 */
 	int countXX(String str) { // ngl i have no clue why this and doubleX aren't public
+		// in java 9+ it would be really easy to use Matcher.results() but that's not available here
 		return str.length() < 2 ? 0 : (str.startsWith("xx") ? 1 : 0) + countXX(str.substring(1));
 	}
 
@@ -47,7 +48,7 @@ public class Warmup2 {
 	 */
 	public String stringSplosion(String str) {
 		return java.util.stream.IntStream.rangeClosed(1, str.length())
-										 .mapToObj(i -> str.substring(0, i)).collect(Collectors.joining());
+				.mapToObj(i -> str.substring(0, i)).collect(Collectors.joining());
 	}
 
 	/**
@@ -56,17 +57,16 @@ public class Warmup2 {
 	 */
 	public int last2(String str) {
 		return java.util.stream.IntStream.rangeClosed(0, str.length() - 3)
-										 .map(i -> str.substring(i, i + 2)
-													  .equals(str.substring(str.length() - 2))
-												   ? 1 : 0)
-										 .sum();
+				.map(i -> str.substring(i, i + 2).equals(str.substring(str.length() - 2))
+						? 1 : 0)
+				.sum();
 	}
 
 	/**
 	 * Given an array of ints, return the number of 9's in the array.
 	 */
 	public int arrayCount9(int[] nums) {
-		return Arrays.stream(nums).filter(i -> i == 9).toArray().length;
+		return (int) Arrays.stream(nums).filter(i -> i == 9).count();
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class Warmup2 {
 	 */
 	public int stringMatch(String a, String b) {
 		return java.util.stream.IntStream.rangeClosed(0, Math.min(a.length(), b.length()) - 2)
-										 .map(i -> a.substring(i, i + 2).equals(b.substring(i, i + 2)) ? 1 : 0).sum();
+				.map(i -> a.substring(i, i + 2).equals(b.substring(i, i + 2)) ? 1 : 0).sum();
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class Warmup2 {
 	 */
 	public int array667(int[] nums) {
 		return java.util.stream.IntStream.rangeClosed(0, nums.length - 2)
-										 .map(i -> (nums[i] == 6 && (nums[i + 1] == 6 || nums[i + 1] == 7)) ? 1 : 0).sum();
+				.map(i -> (nums[i] == 6 && (nums[i + 1] == 6 || nums[i + 1] == 7)) ? 1 : 0).sum();
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class Warmup2 {
 	 */
 	public boolean noTriples(int[] nums) {
 		return java.util.stream.IntStream.rangeClosed(0, nums.length - 3)
-										 .noneMatch(i -> nums[i] == nums[i + 1] && nums[i + 1] == nums[i + 2]);
+				.noneMatch(i -> nums[i] == nums[i + 1] && nums[i + 1] == nums[i + 2]);
 	}
 
 	/**
@@ -141,6 +141,6 @@ public class Warmup2 {
 	 */
 	public boolean has271(int[] nums) {
 		return java.util.stream.IntStream.rangeClosed(0, nums.length - 3)
-										 .anyMatch(i -> nums[i + 1] == nums[i] + 5 && Math.abs(nums[i + 2] - (nums[i] - 1)) <= 2);
+				.anyMatch(i -> nums[i + 1] == nums[i] + 5 && Math.abs(nums[i + 2] - (nums[i] - 1)) <= 2);
 	}
 }

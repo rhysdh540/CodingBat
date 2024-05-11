@@ -264,9 +264,9 @@ public class String1 {
 	 */
 	public String withoutX(String str) {
 		return "x".equals(str) ? "" :
-			   str.startsWith("x") ?
-			   (str.endsWith("x") ? str.substring(1, str.length() - 1) : str.substring(1)) :
-			   (str.endsWith("x") ? str.substring(0, str.length() - 1) : str);
+				str.startsWith("x") ?
+						(str.endsWith("x") ? str.substring(1, str.length() - 1) : str.substring(1)) :
+						(str.endsWith("x") ? str.substring(0, str.length() - 1) : str);
 	}
 
 	/**

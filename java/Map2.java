@@ -11,7 +11,7 @@ public class Map2 {
 	 */
 	public Map<String, Integer> word0(String[] strings) {
 		return Arrays.stream(strings)
-					 .collect(HashMap::new, (m, s) -> m.put(s, 0), Map::putAll);
+				.collect(HashMap::new, (m, s) -> m.put(s, 0), Map::putAll);
 	}
 
 	/**
@@ -20,7 +20,7 @@ public class Map2 {
 	 */
 	public Map<String, Integer> wordLen(String[] strings) {
 		return Arrays.stream(strings)
-					 .collect(HashMap::new, (m, s) -> m.put(s, s.length()), Map::putAll);
+				.collect(HashMap::new, (m, s) -> m.put(s, s.length()), Map::putAll);
 	}
 
 	/**
@@ -29,9 +29,9 @@ public class Map2 {
 	 */
 	public Map<String, String> pairs(String[] strings) {
 		return Arrays.stream(strings)
-					 .collect(HashMap::new,
-							 (m, s) -> m.put(s.substring(0, 1), s.substring(s.length() - 1)),
-							 Map::putAll);
+				.collect(HashMap::new,
+						(m, s) -> m.put(s.substring(0, 1), s.substring(s.length() - 1)),
+						Map::putAll);
 	}
 
 	/**
@@ -40,9 +40,9 @@ public class Map2 {
 	 */
 	public Map<String, Integer> wordCount(String[] strings) {
 		return Arrays.stream(strings)
-					 .collect(HashMap::new,
-							 (m, s) -> m.put(s, m.containsKey(s) ? m.get(s) + 1 : 1),
-							 Map::putAll);
+				.collect(HashMap::new,
+						(m, s) -> m.put(s, m.containsKey(s) ? m.get(s) + 1 : 1),
+						Map::putAll);
 	}
 
 	/**
@@ -51,11 +51,11 @@ public class Map2 {
 	 */
 	public Map<String, String> firstChar(String[] strings) {
 		return Arrays.stream(strings)
-					 .collect(HashMap::new,
-							 (m, s) -> m.put(s.substring(0, 1), m.containsKey(s.substring(0, 1))
-									 ? m.get(s.substring(0, 1)) + s
-									 : s),
-							 Map::putAll);
+				.collect(HashMap::new,
+						(m, s) -> m.put(s.substring(0, 1), m.containsKey(s.substring(0, 1))
+								? m.get(s.substring(0, 1)) + s
+								: s),
+						Map::putAll);
 	}
 
 	/**
@@ -79,9 +79,9 @@ public class Map2 {
 	 */
 	public Map<String, Boolean> wordMultiple(String[] strings) {
 		return Arrays.stream(strings)
-					 .collect(HashMap::new,
-							 (m, s) -> m.put(s, m.containsKey(s)),
-							 Map::putAll);
+				.collect(HashMap::new,
+						(m, s) -> m.put(s, m.containsKey(s)),
+						Map::putAll);
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class Map2 {
 		Map<Character, Integer> map = new HashMap<>();
 		for(int i = 0; i < strings.length; i++) {
 			char c = strings[i].charAt(0);
-			if(map.containsKey(c) && map.get(c) >= 0){
+			if(map.containsKey(c) && map.get(c) >= 0) {
 				int temp = map.put(c, -1);
 				String tempString = strings[i];
 				strings[i] = strings[temp];
@@ -122,7 +122,7 @@ public class Map2 {
 
 		for(int i = 0; i < strings.length; i++) {
 			char c = strings[i].charAt(0);
-			if(map.containsKey(c) && map.get(c) >= 0){
+			if(map.containsKey(c) && map.get(c) >= 0) {
 				int temp = map.put(c, -1);
 				result[i] = result[temp];
 				result[temp] = strings[i];

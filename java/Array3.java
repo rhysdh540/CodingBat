@@ -115,12 +115,13 @@ public class Array3 {
 	/**
 	 * Say that a "clump" in an array is a series of 2 or more adjacent elements of the same value.
 	 * Return the number of clumps in the given array.
+	 *
 	 * @see String3#maxBlock(String) regexplanation
 	 */
 	@SuppressWarnings("RegExpSuspiciousBackref")
 	public int countClumps(int[] nums) {
 		return (int) Arrays.stream(Arrays.stream(nums).collect(StringBuilder::new, StringBuilder::append, StringBuilder::append).toString()
-				.split("(?<=(.))(?!\\1)"))
+						.split("(?<=(.))(?!\\1)"))
 				.filter(s -> s.length() > 1)
 				.count();
 	}

@@ -39,16 +39,16 @@ public class Logic1 {
 	 */
 	public int caughtSpeeding(int speed, boolean isBirthday) {
 		return (isBirthday)
-			   ? (speed < 66)
-				 ? 0
-				 : (speed < 86)
-				   ? 1
-				   : 2
-			   : (speed < 61)
-				 ? 0
-				 : (speed < 81)
-				   ? 1
-				   : 2;
+				? (speed < 66)
+				? 0
+				: (speed < 86)
+				? 1
+				: 2
+				: (speed < 61)
+				? 0
+				: (speed < 81)
+				? 1
+				: 2;
 	}
 
 	/**
@@ -67,12 +67,12 @@ public class Logic1 {
 	 */
 	public String alarmClock(int day, boolean vacation) {
 		return (vacation)
-			   ? (day > 0 && day < 6)
-				 ? "10:00"
-				 : "off"
-			   : (day > 0 && day < 6)
-				 ? "7:00"
-				 : "10:00";
+				? (day > 0 && day < 6)
+				? "10:00"
+				: "off"
+				: (day > 0 && day < 6)
+				? "7:00"
+				: "10:00";
 	}
 
 	/**
@@ -102,6 +102,7 @@ public class Logic1 {
 
 	/**
 	 * Return true if the given non-negative number is 1 or 2 more than a multiple of 20.
+	 *
 	 * @see <a href="https://codingbat.com/doc/practice/mod-introduction.html">Introduction to Mod</a>
 	 */
 	public boolean more20(int n) {
@@ -119,6 +120,7 @@ public class Logic1 {
 	/**
 	 * Return true if the given non-negative number is 1 or 2 less than a multiple of 20.
 	 * So for example 38 and 39 return true, but 40 returns false.
+	 *
 	 * @see <a href="https://codingbat.com/doc/practice/mod-introduction.html">Introduction to Mod</a>
 	 */
 	public boolean less20(int n) {
@@ -128,6 +130,7 @@ public class Logic1 {
 	/**
 	 * Given a non-negative number "num", return true if num is within 2 of a multiple of 10.
 	 * Note: (a % b) is the remainder of dividing a by b, so (7 % 5) is 2.
+	 *
 	 * @see <a href="https://codingbat.com/doc/practice/mod-introduction.html">Introduction to Mod</a>
 	 */
 	public boolean nearTen(int num) {
@@ -159,7 +162,7 @@ public class Logic1 {
 	 */
 	public int teaParty(int tea, int candy) {
 		return (tea < 5 || candy < 5) ? 0
-			   : (tea >= 2 * candy || candy >= 2 * tea) ? 2 : 1;
+				: (tea >= 2 * candy || candy >= 2 * tea) ? 2 : 1;
 	}
 
 	/**
@@ -169,10 +172,8 @@ public class Logic1 {
 	 * (See also: <a href="https://codingbat.com/doc/practice/fizzbuzz-code.html">FizzBuzz Code</a>)
 	 */
 	public String fizzString(String str) {
-		return str.matches("f.*b") ? "FizzBuzz"
-			   : str.startsWith("f") ? "Fizz"
-			   : str.endsWith("b") ? "Buzz"
-			   : str;
+		return str.startsWith("f") ? (str.endsWith("b") ? "FizzBuzz" : "Fizz")
+				: (str.endsWith("b") ? "Buzz" : str);
 	}
 
 	/**
@@ -184,10 +185,10 @@ public class Logic1 {
 	 * (See also: <a href="https://codingbat.com/doc/practice/fizzbuzz-code.html">FizzBuzz Code</a>)
 	 */
 	public String fizzString2(int n) {
-		return (n % 3 == 0 && n % 5 == 0) ? "FizzBuzz!"
-			   : (n % 3 == 0) ? "Fizz!"
-			   : (n % 5 == 0) ? "Buzz!"
-			   : n + "!";
+		return ((n % 3 == 0 && n % 5 == 0) ? "FizzBuzz"
+				: (n % 3 == 0) ? "Fizz"
+				: (n % 5 == 0) ? "Buzz"
+				: n) + "!";
 	}
 
 	/**
@@ -237,8 +238,8 @@ public class Logic1 {
 	 */
 	public int withoutDoubles(int die1, int die2, boolean noDoubles) {
 		return (noDoubles && die1 == die2)
-			   ? (die1 == 6) ? 7 : die1 + die2 + 1
-			   : die1 + die2;
+				? (die1 == 6) ? 7 : die1 + die2 + 1
+				: die1 + die2;
 	}
 
 	/**
@@ -249,8 +250,8 @@ public class Logic1 {
 	 */
 	public int maxMod5(int a, int b) {
 		return (a == b) ? 0
-			   : (a % 5 == b % 5) ? Math.min(a, b)
-			   : Math.max(a, b);
+				: (a % 5 == b % 5) ? Math.min(a, b)
+				: Math.max(a, b);
 	}
 
 	/**
@@ -260,8 +261,8 @@ public class Logic1 {
 	 */
 	public int redTicket(int a, int b, int c) {
 		return (a == b && b == c)
-			   ? (a == 2) ? 10 : 5
-			   : (a != b && a != c) ? 1 : 0;
+				? (a == 2) ? 10 : 5
+				: (a != b && a != c) ? 1 : 0;
 	}
 
 	/**
@@ -272,7 +273,7 @@ public class Logic1 {
 	 */
 	public int greenTicket(int a, int b, int c) {
 		return (a == b && b == c) ? 20
-			   : (a == b || a == c || b == c) ? 10 : 0;
+				: (a == b || a == c || b == c) ? 10 : 0;
 	}
 
 	/**
@@ -284,7 +285,7 @@ public class Logic1 {
 	 */
 	public int blueTicket(int a, int b, int c) {
 		return (a + b == 10 || b + c == 10 || a + c == 10) ? 10
-			   : (a + b == b + c + 10 || a + b == a + c + 10) ? 5 : 0;
+				: (a + b == b + c + 10 || a + b == a + c + 10) ? 5 : 0;
 	}
 
 	/**
@@ -294,9 +295,9 @@ public class Logic1 {
 	 */
 	public boolean shareDigit(int a, int b) {
 		return a / 10 == b / 10
-			|| a / 10 == b % 10
-			|| a % 10 == b / 10
-			|| a % 10 == b % 10;
+				|| a / 10 == b % 10
+				|| a % 10 == b / 10
+				|| a % 10 == b % 10;
 	}
 
 	/**

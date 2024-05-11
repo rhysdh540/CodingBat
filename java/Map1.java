@@ -35,16 +35,16 @@ public class Map1 {
 	 * If both keys are present, append their 2 string values together and store the result under the key "ab".
 	 */
 	public Map<String, String> mapAB(Map<String, String> map) {
-		// monstrous one-liner:
+		// monstrous one-liner: (only for this one)
 		return !map.containsKey("a") || !map.containsKey("b") ? map :
-			   java.util.stream.Stream
-					   .concat(map.entrySet()
-								  .stream()
-								  .filter(e -> !"ab".equals(e.getKey())),
-							   Collections.singletonMap("ab", map.get("a") + map.get("b"))
-										  .entrySet()
-										  .stream())
-					   .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+				java.util.stream.Stream
+						.concat(map.entrySet()
+										.stream()
+										.filter(e -> !"ab".equals(e.getKey())),
+								Collections.singletonMap("ab", map.get("a") + map.get("b"))
+										.entrySet()
+										.stream())
+						.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 		/* or just:
 		if(map.containsKey("a") && map.containsKey("b"))
 			map.put("ab", map.get("a") + map.get("b"));

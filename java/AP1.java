@@ -9,8 +9,8 @@ public class AP1 {
 	 * The array will be length 2 or more.
 	 */
 	public boolean scoresIncreasing(int[] scores) {
-    	return java.util.stream.IntStream.range(0, scores.length - 1)
-										 .allMatch(i -> scores[i] <= scores[i + 1]);
+		return java.util.stream.IntStream.range(0, scores.length - 1)
+				.allMatch(i -> scores[i] <= scores[i + 1]);
 	}
 
 	/**
@@ -19,7 +19,7 @@ public class AP1 {
 	 */
 	public boolean scores100(int[] scores) {
 		return java.util.stream.IntStream.range(0, scores.length - 1)
-										 .anyMatch(i -> scores[i] == 100 && scores[i + 1] == 100);
+				.anyMatch(i -> scores[i] == 100 && scores[i + 1] == 100);
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class AP1 {
 	 */
 	public boolean scoresClump(int[] scores) {
 		return java.util.stream.IntStream.range(0, scores.length - 2)
-										 .anyMatch(i -> scores[i + 2] - scores[i] <= 2);
+				.anyMatch(i -> scores[i + 2] - scores[i] <= 2);
 	}
 
 	/**
@@ -66,8 +66,8 @@ public class AP1 {
 	 */
 	public List wordsWithoutList(String[] words, int len) {
 		return Arrays.stream(words)
-					 .filter(w -> w.length() != len)
-					 .collect(Collectors.toList());
+				.filter(w -> w.length() != len)
+				.collect(Collectors.toList());
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class AP1 {
 	 * and / to discard the rightmost digit.
 	 */
 	public boolean hasOne(int n) {
-		return String.valueOf(n).contains("1");
+		return n % 10 == 1 || n > 9 && hasOne(n / 10);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class AP1 {
 	 */
 	public boolean dividesSelf(int n) {
 		return String.valueOf(n).chars()
-					 .allMatch(c -> c != '0' && n % (c - '0') == 0);
+				.allMatch(c -> c != '0' && n % (c - '0') == 0);
 	}
 
 	/**
@@ -95,9 +95,9 @@ public class AP1 {
 	 */
 	public int[] copyEvens(int[] nums, int count) {
 		return Arrays.stream(nums)
-					 .filter(n -> n % 2 == 0)
-					 .limit(count)
-					 .toArray();
+				.filter(n -> n % 2 == 0)
+				.limit(count)
+				.toArray();
 	}
 
 	/**
@@ -108,9 +108,9 @@ public class AP1 {
 	 */
 	public int[] copyEndy(int[] nums, int count) {
 		return Arrays.stream(nums)
-					 .filter(i -> i >= 0 && i <= 10 || i >= 90 && i <= 100)
-					 .limit(count)
-					 .toArray();
+				.filter(i -> i >= 0 && i <= 10 || i >= 90 && i <= 100)
+				.limit(count)
+				.toArray();
 	}
 
 	/**
@@ -145,8 +145,8 @@ public class AP1 {
 	 */
 	public String[] wordsWithout(String[] words, String target) {
 		return Arrays.stream(words)
-					 .filter(w -> !w.equals(target))
-					 .toArray(String[]::new);
+				.filter(w -> !w.equals(target))
+				.toArray(String[]::new);
 	}
 
 	/**
@@ -157,11 +157,10 @@ public class AP1 {
 	 */
 	public int scoresSpecial(int[] a, int[] b) {
 		return Arrays.stream(a).filter(i -> i % 10 == 0).max().orElse(0) +
-			   Arrays.stream(b).filter(i -> i % 10 == 0).max().orElse(0);
+				Arrays.stream(b).filter(i -> i % 10 == 0).max().orElse(0);
 	}
 
 	/**
-	 *
 	 * We have an array of heights, representing the altitude along a walking trail.
 	 * Given start/end indexes into the array, return the sum of the changes for a walk
 	 * beginning at the start index and ending at the end index. For example, with the heights
@@ -213,8 +212,8 @@ public class AP1 {
 	 */
 	public int userCompare(String aName, int aId, String bName, int bId) {
 		return aName.equals(bName)
-			   ? Integer.compare(aId, bId)
-			   : aName.compareTo(bName) / Math.abs(aName.compareTo(bName));
+				? Integer.compare(aId, bId)
+				: aName.compareTo(bName) / Math.abs(aName.compareTo(bName));
 	}
 
 	/**
@@ -226,10 +225,10 @@ public class AP1 {
 	 */
 	public String[] mergeTwo(String[] a, String[] b, int n) {
 		return java.util.stream.Stream.concat(Arrays.stream(a), Arrays.stream(b))
-									 .distinct()
-									 .sorted()
-									 .limit(n)
-									 .toArray(String[]::new);
+				.distinct()
+				.sorted()
+				.limit(n)
+				.toArray(String[]::new);
 	}
 
 	/**
@@ -239,8 +238,8 @@ public class AP1 {
 	 */
 	public int commonTwo(String[] a, String[] b) {
 		return (int) Arrays.stream(a)
-						   .filter(s -> Arrays.binarySearch(b, s) >= 0)
-						   .distinct()
-						   .count();
+				.filter(s -> Arrays.binarySearch(b, s) >= 0)
+				.distinct()
+				.count();
 	}
 }

@@ -106,7 +106,10 @@ public class Array1 {
 	 * Note: by default, a new int array contains all 0's.
 	 */
 	public int[] makeLast(int[] nums) {
-		return java.util.stream.IntStream.concat(Arrays.stream(new int[2 * nums.length - 1]), Arrays.stream(new int[]{nums[nums.length - 1]})).toArray();
+		return java.util.stream.IntStream.concat(
+				Arrays.stream(new int[2 * nums.length - 1]),
+				Arrays.stream(new int[]{nums[nums.length - 1]})
+		).toArray();
 	}
 
 	/**
@@ -115,7 +118,7 @@ public class Array1 {
 	 */
 	public boolean double23(int[] nums) {
 		return Arrays.stream(nums).filter(i -> i == 2).count() == 2
-		    || Arrays.stream(nums).filter(i -> i == 3).count() == 2;
+				|| Arrays.stream(nums).filter(i -> i == 3).count() == 2;
 	}
 
 	/**
@@ -124,9 +127,9 @@ public class Array1 {
 	 */
 	public int[] fix23(int[] nums) { // not the most elegant solution but i couldn't make it work with streams
 		return nums[0] == 2 && nums[1] == 3 ?
-			   new int[]{2, 0, nums[2]} :
-			   		nums[1] == 2 && nums[2] == 3 ?
-			   			new int[]{nums[0], 2, 0} : nums;
+				new int[]{2, 0, nums[2]} :
+				nums[1] == 2 && nums[2] == 3 ?
+						new int[]{nums[0], 2, 0} : nums;
 	}
 
 	/**
@@ -141,7 +144,7 @@ public class Array1 {
 	 * Return the array which has the largest sum. In event of a tie, return a.
 	 */
 	public int[] biggerTwo(int[] a, int[] b) {
-		return Arrays.stream(a).sum() >= Arrays.stream(b).sum() ? a : b;
+		return a[0] + a[1] >= b[0] + b[1] ? a : b;
 	}
 
 	/**
@@ -165,9 +168,9 @@ public class Array1 {
 	 */
 	public int[] swapEnds(int[] nums) {
 		return nums.length < 2 ? nums :
-			   java.util.stream.IntStream.concat(Arrays.stream(new int[]{nums[nums.length - 1]}),
-			   		java.util.stream.IntStream.concat(Arrays.stream(nums, 1, nums.length - 1),
-			   			Arrays.stream(new int[]{nums[0]}))).toArray();
+				java.util.stream.IntStream.concat(Arrays.stream(new int[]{nums[nums.length - 1]}),
+						java.util.stream.IntStream.concat(Arrays.stream(nums, 1, nums.length - 1),
+								Arrays.stream(new int[]{nums[0]}))).toArray();
 	}
 
 	/**
@@ -200,9 +203,9 @@ public class Array1 {
 	 */
 	public boolean unlucky1(int[] nums) {
 		return nums.length > 1 &&
-			   (nums[0] == 1 && nums[1] == 3 ||
-		     	nums[1] == 1 && nums[2] == 3 ||
-				nums[nums.length - 2] == 1 && nums[nums.length - 1] == 3);
+				(nums[0] == 1 && nums[1] == 3 ||
+						nums[1] == 1 && nums[2] == 3 ||
+						nums[nums.length - 2] == 1 && nums[nums.length - 1] == 3);
 	}
 
 	/**
@@ -212,10 +215,10 @@ public class Array1 {
 	 */
 	public int[] make2(int[] a, int[] b) {
 		return java.util.stream.IntStream.concat(
-				Arrays.stream(a),
-				Arrays.stream(b))
-										 .limit(2)
-										 .toArray();
+						Arrays.stream(a),
+						Arrays.stream(b))
+				.limit(2)
+				.toArray();
 	}
 
 	/**
@@ -224,8 +227,8 @@ public class Array1 {
 	 */
 	public int[] front11(int[] a, int[] b) {
 		return java.util.stream.IntStream.concat(
-				Arrays.stream(a).limit(1),
-				Arrays.stream(b).limit(1))
-										 .toArray();
+						Arrays.stream(a).limit(1),
+						Arrays.stream(b).limit(1))
+				.toArray();
 	}
 }

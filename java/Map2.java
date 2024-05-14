@@ -91,19 +91,16 @@ public class Map2 {
 	 * anything. Using a map, this can be solved making just one pass over the array. More difficult than it looks.
 	 */
 	public String[] allSwap(String[] strings) {
-		//TODO make this work
 		Map<Character, Integer> map = new HashMap<>();
 		for(int i = 0; i < strings.length; i++) {
 			char c = strings[i].charAt(0);
-			if(map.containsKey(c) && map.get(c) >= 0) {
-				int temp = map.put(c, -1);
-				String tempString = strings[i];
-				strings[i] = strings[temp];
-				strings[temp] = tempString;
-			} else {
-				if(!map.containsKey(c))
-					map.put(c, i);
-			}
+			if(map.containsKey(c)) {
+				String temp = strings[i];
+				strings[i] = strings[map.get(c)];
+				strings[map.get(c)] = temp;
+				map.remove(c);
+			} else
+				map.put(c, i);
 		}
 		return strings;
 	}
@@ -123,6 +120,7 @@ public class Map2 {
 		for(int i = 0; i < strings.length; i++) {
 			char c = strings[i].charAt(0);
 			if(map.containsKey(c) && map.get(c) >= 0) {
+				@SuppressWarnings("DataFlowIssue") // map.containsKey(c) is true, so map.put can't return null
 				int temp = map.put(c, -1);
 				result[i] = result[temp];
 				result[temp] = strings[i];

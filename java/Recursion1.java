@@ -185,6 +185,7 @@ public class Recursion1 {
 	 * Count recursively the total number of "abc" and "aba" substrings that appear in the given string.
 	 */
 	public int countAbc(String str) {
+		// regex: matches "abc" or "aba" followed by any characters
 		return str.length() < 3 ? 0 :
 				(str.matches("(abc|aba).*") ? 1 : 0) + countAbc(str.substring(1));
 	}

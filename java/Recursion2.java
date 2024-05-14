@@ -81,13 +81,13 @@ public class Recursion2 {
 	 * from splitArray(). (No loops needed.)
 	 */
 	public boolean splitArray(int[] nums) {
-		return splitArray0(0, nums, 0, 0);
+		return splitArray(0, nums, 0, 0);
 	}
 
-	private boolean splitArray0(int start, int[] nums, int sum1, int sum2) {
+	private boolean splitArray(int start, int[] nums, int sum1, int sum2) {
 		if(start >= nums.length)
 			return sum1 == sum2;
-		return splitArray0(start + 1, nums, sum1 + nums[start], sum2) || splitArray0(start + 1, nums, sum1, sum2 + nums[start]);
+		return splitArray(start + 1, nums, sum1 + nums[start], sum2) || splitArray(start + 1, nums, sum1, sum2 + nums[start]);
 	}
 
 	/**
@@ -97,13 +97,13 @@ public class Recursion2 {
 	 * initial call to your recursive helper from splitOdd10(). (No loops needed.)
 	 */
 	public boolean splitOdd10(int[] nums) {
-		return splitOdd100(0, nums, 0, 0);
+		return splitOdd10(0, nums, 0, 0);
 	}
 
-	private boolean splitOdd100(int start, int[] nums, int sum1, int sum2) {
+	private boolean splitOdd10(int start, int[] nums, int sum1, int sum2) {
 		if(start >= nums.length)
 			return (sum1 % 10 == 0 && sum2 % 2 == 1) || (sum1 % 2 == 1 && sum2 % 10 == 0);
-		return splitOdd100(start + 1, nums, sum1 + nums[start], sum2) || splitOdd100(start + 1, nums, sum1, sum2 + nums[start]);
+		return splitOdd10(start + 1, nums, sum1 + nums[start], sum2) || splitOdd10(start + 1, nums, sum1, sum2 + nums[start]);
 	}
 
 	/**
@@ -113,16 +113,16 @@ public class Recursion2 {
 	 * other. (No loops needed.)
 	 */
 	public boolean split53(int[] nums) {
-		return split530(0, nums, 0, 0);
+		return split53(0, nums, 0, 0);
 	}
 
-	private boolean split530(int start, int[] nums, int sum1, int sum2) {
+	private boolean split53(int start, int[] nums, int sum1, int sum2) {
 		if(start >= nums.length)
 			return sum1 == sum2;
 		if(nums[start] % 5 == 0)
-			return split530(start + 1, nums, sum1 + nums[start], sum2);
+			return split53(start + 1, nums, sum1 + nums[start], sum2);
 		if(nums[start] % 3 == 0)
-			return split530(start + 1, nums, sum1, sum2 + nums[start]);
-		return split530(start + 1, nums, sum1 + nums[start], sum2) || split530(start + 1, nums, sum1, sum2 + nums[start]);
+			return split53(start + 1, nums, sum1, sum2 + nums[start]);
+		return split53(start + 1, nums, sum1 + nums[start], sum2) || split53(start + 1, nums, sum1, sum2 + nums[start]);
 	}
 }

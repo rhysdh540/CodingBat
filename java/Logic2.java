@@ -18,9 +18,11 @@ public class Logic2 {
 	 * if one of the values is the same as another of the values, it does not count towards the sum.
 	 */
 	public int loneSum(int a, int b, int c) {
-		return Arrays.stream(new int[]{a, b, c}).filter(i ->
-						Arrays.stream(new int[]{a, b, c}).filter(j -> i == j).count() == 1)
-				.sum();
+		return (a == b && b == c) ? 0
+				: a == b ? c
+				: a == c ? b
+				: b == c ? a
+				: a + b + c;
 	}
 
 	/**
@@ -43,12 +45,10 @@ public class Logic2 {
 	 * Define the helper below and at the same indent level as the main noTeenSum().
 	 */
 	public int noTeenSum(int a, int b, int c) {
-		return Arrays.stream(new int[]{a, b, c})
-				.map(this::fixTeen)
-				.sum();
+		return fixTeen(a) + fixTeen(b) + fixTeen(c);
 	}
 
-	// required helper method - can be replaced with `.filter(i -> i == 15 || i == 16 || i < 13 || i > 19)` if you prefer
+	// required helper method
 	public int fixTeen(int n) {
 		return n == 15 || n == 16 || n < 13 || n > 19 ? n : 0;
 	}
@@ -61,12 +61,10 @@ public class Logic2 {
 	 * Write the helper entirely below and at the same indent level as roundSum().
 	 */
 	public int roundSum(int a, int b, int c) {
-		return Arrays.stream(new int[]{a, b, c})
-				.map(this::round10)
-				.sum();
+		return round10(a) + round10(b) + round10(c);
 	}
 
-	// required helper method - can be inlined if you prefer
+	// required helper method
 	public int round10(int i) {
 		return 10 * ((i % 10 >= 5 ? (i + 10) : i) / 10);
 	}

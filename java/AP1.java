@@ -76,6 +76,7 @@ public class AP1 {
 	 */
 	public boolean hasOne(int n) {
 		return n % 10 == 1 || n > 9 && hasOne(n / 10);
+		//or: return (n + "").contains("1");
 	}
 
 	/**

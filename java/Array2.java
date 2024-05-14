@@ -139,10 +139,7 @@ public class Array2 {
 	 * but not both.
 	 */
 	public boolean either24(int[] nums) {
-		return java.util.stream.IntStream.range(0, nums.length - 1)
-				.anyMatch(i -> nums[i] == 2 && nums[i + 1] == 2)
-				^ java.util.stream.IntStream.range(0, nums.length - 1)
-				.anyMatch(i -> nums[i] == 4 && nums[i + 1] == 4);
+		return Arrays.toString(nums).contains("2, 2") ^ Arrays.toString(nums).contains("4, 4");
 	}
 
 	/**
@@ -161,8 +158,8 @@ public class Array2 {
 	 * or there are two 7's separated by one element, such as with {7, 1, 7}.
 	 */
 	public boolean has77(int[] nums) {
-		return java.util.stream.IntStream.range(0, nums.length - 1)
-				.anyMatch(i -> nums[i] == 7 && (nums[i + 1] == 7 || (i < nums.length - 2 && nums[i + 2] == 7)));
+		// regex: anything, 7, possible any element, 7, anything (could be more elements or just the closing bracket)
+		return Arrays.toString(nums).matches(".*7, (., )?7.*");
 	}
 
 	/**
@@ -199,7 +196,7 @@ public class Array2 {
 	 * Given an array of ints, return true if every 2 that appears in the array is next to another 2.
 	 */
 	public boolean twoTwo(int[] nums) {
-		return nums.length == 1 ? !Arrays.equals(nums, new int[]{2}) :
+		return nums.length == 1 ? !(nums[0] == 2) :
 				java.util.stream.IntStream.range(0, nums.length)
 						.filter(i -> nums[i] == 2)
 						.allMatch(i ->

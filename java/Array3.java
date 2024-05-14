@@ -1,6 +1,8 @@
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @SuppressWarnings("unused")
 public class Array3 {
@@ -61,7 +63,8 @@ public class Array3 {
 	public boolean canBalance(int[] nums) {
 		return java.util.stream.IntStream.range(0, nums.length).anyMatch(i ->
 				Arrays.stream(Arrays.copyOf(nums, i)).sum() ==
-				Arrays.stream(Arrays.copyOfRange(nums, i, nums.length)).sum());
+				Arrays.stream(Arrays.copyOfRange(nums, i, nums.length)).sum()
+		);
 	}
 
 	/**
@@ -102,14 +105,14 @@ public class Array3 {
 	 * Return the size of the largest mirror section found in the given array.
 	 */
 	public int maxMirror(int[] nums) {
-		//TODO shorten
-		int max = 0, size = 0;
-		for(int start = 0; start < nums.length; start++)
-			for(int begin = nums.length - 1; begin >= 0; begin--, max = Math.max(max, size), size = 0) {
-				int i = start, j = begin;
-				for(; i < nums.length && j >= 0 && nums[i] == nums[j]; size++, i++, j--) ;
-			}
-		return max;
+		return java.util.stream.IntStream.range(0, nums.length).map(i ->
+				java.util.stream.IntStream.range(0, nums.length).map(j ->
+						(int) java.util.stream.IntStream.range(0, Math.min(nums.length - i, j + 1))
+						.filter(n -> java.util.stream.IntStream.range(0, n + 1)
+								.allMatch(m -> nums[i + m] == nums[j - m]))
+						.count()
+				).max().orElse(0)
+		).max().orElse(0);
 	}
 
 	/**
@@ -120,7 +123,7 @@ public class Array3 {
 	 */
 	@SuppressWarnings("RegExpSuspiciousBackref")
 	public int countClumps(int[] nums) {
-		return (int) Arrays.stream(Arrays.stream(nums).collect(StringBuilder::new, StringBuilder::append, StringBuilder::append).toString()
+		return (int) Arrays.stream(Arrays.toString(nums).replaceAll("[\\[\\], ]", "")
 						.split("(?<=(.))(?!\\1)"))
 				.filter(s -> s.length() > 1)
 				.count();

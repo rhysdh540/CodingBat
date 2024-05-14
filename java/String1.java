@@ -178,7 +178,7 @@ public class String1 {
 	 * so "yo" and "java" yields "ya". If either string is length 0, use '@' for its missing char.
 	 */
 	public String lastChars(String a, String b) {
-		return (a + "@").charAt(0) + ("@" + b).substring(("@" + b).length() - 1);
+		return (a + "@").charAt(0) + ("@" + b).substring(b.length());
 	}
 
 	/**
@@ -277,6 +277,6 @@ public class String1 {
 		//regex: ^(x(.)|(.)x) matches either x followed by any character or any character followed by x at the start of the string
 		// the non-x character gets saved to capturing group 2 or 3 (the other will be empty, so we can use $2$3 to get the non-x character)
 		// the ^x case is handled separately for the second x
-		return str.replaceAll("^(x(.)|(.)x)", "$3$2").replaceAll("^x", "");
+		return str.replaceAll("^(x(.)|(.)x)", "$2$3").replaceAll("^x", "");
 	}
 }

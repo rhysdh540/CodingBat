@@ -21,7 +21,7 @@ public class String1 {
 	 * Given tag and word strings, create the HTML string with tags around the word, e.g. "<i>Yay</i>".
 	 */
 	public String makeTags(String tag, String word) {
-		return "<" + tag + ">" + word + "</" + tag + ">";
+		return String.format("<%s>%s</%s>", tag, word, tag);
 	}
 
 	/**
@@ -110,6 +110,7 @@ public class String1 {
 	 * Given a string, return a version without both the first and last char of the string.
 	 * The string may be any length, including 0.
 	 */
+	@SuppressWarnings("SpellCheckingInspection") // the website misspells it too
 	public String withouEnd2(String str) {
 		return str.length() > 2 ? str.substring(1, str.length() - 1) : "";
 	}
@@ -160,9 +161,10 @@ public class String1 {
 	 * Note: use .equals() to compare 2 strings.
 	 */
 	public boolean hasBad(String str) {
-		//regex: (bad|.bad) matches either bad or any character followed by bad
-		//.* matches any number of characters after that
-		return str.matches("(bad|.bad).*");
+		// regex: .? is an optional character, so it matches either nothing or the one character before bad
+		// bad is just bad
+		// and .* is any number of any characters after bad
+		return str.matches(".?bad.*");
 	}
 
 	/**

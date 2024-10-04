@@ -99,7 +99,7 @@ public class Recursion1 {
 	 * where all the lowercase 'x' chars have been changed to 'y' chars.
 	 */
 	public String changeXY(String str) {
-		return str.isEmpty() ? "" : (str.charAt(0) == 'x' ? "y" : str.charAt(0)) + changeXY(str.substring(1));
+		return str.isEmpty() ? "" : (str.charAt(0) == 'x' ? 'y' : str.charAt(0)) + changeXY(str.substring(1));
 	}
 
 	/**
@@ -168,7 +168,9 @@ public class Recursion1 {
 	 */
 	public String endX(String str) {
 		return str.isEmpty() ? "" :
-				(str.charAt(0) == 'x' ? "" : str.charAt(0)) + endX(str.substring(1)) + (str.charAt(0) == 'x' ? "x" : "");
+				(str.charAt(0) == 'x' ? "" : str.charAt(0))
+						+ endX(str.substring(1))
+						+ (str.charAt(0) == 'x' ? "x" : "");
 	}
 
 	/**
@@ -186,8 +188,7 @@ public class Recursion1 {
 	 */
 	public int countAbc(String str) {
 		// regex: matches "abc" or "aba" followed by any characters
-		return str.length() < 3 ? 0 :
-				(str.matches("(abc|aba).*") ? 1 : 0) + countAbc(str.substring(1));
+		return str.length() < 3 ? 0 : (str.matches("ab[ca].*") ? 1 : 0) + countAbc(str.substring(1));
 	}
 
 	/**

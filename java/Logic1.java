@@ -39,16 +39,10 @@ public class Logic1 {
 	 */
 	public int caughtSpeeding(int speed, boolean isBirthday) {
 		return (isBirthday)
-				? (speed < 66)
-				? 0
-				: (speed < 86)
-				? 1
-				: 2
-				: (speed < 61)
-				? 0
-				: (speed < 81)
-				? 1
-				: 2;
+					? (speed < 66) ? 0
+					: (speed < 86) ? 1 : 2
+				: (speed < 61) ? 0
+				: (speed < 81) ? 1 : 2;
 	}
 
 	/**
@@ -67,12 +61,8 @@ public class Logic1 {
 	 */
 	public String alarmClock(int day, boolean vacation) {
 		return (vacation)
-				? (day > 0 && day < 6)
-				? "10:00"
-				: "off"
-				: (day > 0 && day < 6)
-				? "7:00"
-				: "10:00";
+				? (day > 0 && day < 6) ? "10:00" : "off"
+				: (day > 0 && day < 6) ? "7:00" : "10:00";
 	}
 
 	/**

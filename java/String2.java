@@ -29,6 +29,7 @@ public class String2 {
 	 */
 	public int countCode(String str) {
 		//regex: co.e matches 'co' + any char + 'e'
+		// the -1 in split is to include trailing empty strings
 		return str.split("co.e", -1).length - 1;
 	}
 

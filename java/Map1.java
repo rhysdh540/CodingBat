@@ -1,11 +1,6 @@
-import java.util.Collections;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-/**
- * I'm not making one-liners for these, if you want to see an example see {@link #mapAB}
- */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "ConditionalExpressionWithIdenticalBranches"}) // using them for the side effect
 public class Map1 {
 	/**
 	 * Modify and return the given map as follows: if the key "a" has a value, set the key "b" to have that value,
@@ -13,8 +8,7 @@ public class Map1 {
 	 * taking the value and replacing it with the empty string.
 	 */
 	public Map<String, String> mapBully(Map<String, String> map) {
-		if(map.containsKey("a"))
-			map.put("b", map.put("a", ""));
+		map.computeIfPresent("a", (k, v) -> map.put("b", v) == null ? "" : "");
 		return map;
 	}
 
@@ -24,8 +18,7 @@ public class Map1 {
 	 * leaving the rest of the map unchanged.
 	 */
 	public Map<String, String> mapShare(Map<String, String> map) {
-		if(map.containsKey("a"))
-			map.put("b", map.get("a"));
+		map.computeIfPresent("a", (k, v) -> map.put("b", v) == null ? v : v);
 		map.remove("c");
 		return map;
 	}
@@ -35,21 +28,10 @@ public class Map1 {
 	 * If both keys are present, append their 2 string values together and store the result under the key "ab".
 	 */
 	public Map<String, String> mapAB(Map<String, String> map) {
-		// monstrous one-liner: (only for this one)
-		return !map.containsKey("a") || !map.containsKey("b") ? map :
-				java.util.stream.Stream
-						.concat(map.entrySet()
-										.stream()
-										.filter(e -> !"ab".equals(e.getKey())),
-								Collections.singletonMap("ab", map.get("a") + map.get("b"))
-										.entrySet()
-										.stream())
-						.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-		/* or just:
-		if(map.containsKey("a") && map.containsKey("b"))
-			map.put("ab", map.get("a") + map.get("b"));
+		map.computeIfPresent("a", (k, v) ->
+				map.computeIfPresent("b", (k2, v2) ->
+						map.put("ab", v + v2) == null ? v2 : v2) == null ? v : v);
 		return map;
-		 */
 	}
 
 	/**
@@ -58,8 +40,7 @@ public class Map1 {
 	 * In all cases, set the key "bread" to have the value "butter".
 	 */
 	public Map<String, String> topping1(Map<String, String> map) {
-		if(map.containsKey("ice cream"))
-			map.put("ice cream", "cherry");
+		map.computeIfPresent("ice cream", (k, v) -> "cherry");
 		map.put("bread", "butter");
 		return map;
 	}
@@ -70,10 +51,8 @@ public class Map1 {
 	 * If the key "spinach" has a value, change that value to "nuts".
 	 */
 	public Map<String, String> topping2(Map<String, String> map) {
-		if(map.containsKey("ice cream"))
-			map.put("yogurt", map.get("ice cream"));
-		if(map.containsKey("spinach"))
-			map.put("spinach", "nuts");
+		map.computeIfPresent("ice cream", (k, v) -> map.put("yogurt", v) == null ? v : v);
+		map.computeIfPresent("spinach", (k, v) -> "nuts");
 		return map;
 	}
 
@@ -83,10 +62,8 @@ public class Map1 {
 	 * If the key "salad" has a value, set that as the value for the key "spinach".
 	 */
 	public Map<String, String> topping3(Map<String, String> map) {
-		if(map.containsKey("potato"))
-			map.put("fries", map.get("potato"));
-		if(map.containsKey("salad"))
-			map.put("spinach", map.get("salad"));
+		map.computeIfPresent("potato", (k, v) -> map.put("fries", v) == null ? v : v);
+		map.computeIfPresent("salad", (k, v) -> map.put("spinach", v) == null ? v : v);
 		return map;
 	}
 
@@ -121,9 +98,9 @@ public class Map1 {
 	public Map<String, String> mapAB4(Map<String, String> map) {
 		if(map.containsKey("a") && map.containsKey("b")) {
 			String a = map.get("a"), b = map.get("b");
-			if(a.length() != b.length())
+			if(a.length() != b.length()) {
 				map.put("c", a.length() > b.length() ? a : b);
-			else {
+			} else {
 				map.put("a", "");
 				map.put("b", "");
 			}

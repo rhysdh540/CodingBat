@@ -41,7 +41,7 @@ public class Map2 {
 	public Map<String, Integer> wordCount(String[] strings) {
 		return Arrays.stream(strings)
 				.collect(HashMap::new,
-						(m, s) -> m.put(s, m.containsKey(s) ? m.get(s) + 1 : 1),
+						(m, s) -> m.put(s, m.getOrDefault(s, 0) + 1),
 						Map::putAll);
 	}
 
@@ -64,13 +64,15 @@ public class Map2 {
 	 */
 	public String wordAppend(String[] strings) {
 		HashMap<String, Integer> map = new HashMap<>();
-		String result = "";
-		for(String s : strings) {
-			map.put(s, map.containsKey(s) ? map.get(s) + 1 : 1);
-			if(map.get(s) % 2 == 0)
-				result += s;
-		}
-		return result;
+		return Arrays.stream(strings)
+				.collect(StringBuilder::new,
+						(sb, s) -> {
+							map.put(s, map.getOrDefault(s, 0) + 1);
+							if(map.get(s) % 2 == 0)
+								sb.append(s);
+						},
+						StringBuilder::append)
+				.toString();
 	}
 
 	/**
@@ -99,8 +101,9 @@ public class Map2 {
 				strings[i] = strings[map.get(c)];
 				strings[map.get(c)] = temp;
 				map.remove(c);
-			} else
+			} else {
 				map.put(c, i);
+			}
 		}
 		return strings;
 	}

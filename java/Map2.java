@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,17 +95,12 @@ public class Map2 {
 	 */
 	public String[] allSwap(String[] strings) {
 		Map<Character, Integer> map = new HashMap<>();
-		for(int i = 0; i < strings.length; i++) {
-			char c = strings[i].charAt(0);
-			if(map.containsKey(c)) {
-				String temp = strings[i];
-				strings[i] = strings[map.get(c)];
-				strings[map.get(c)] = temp;
-				map.remove(c);
-			} else {
-				map.put(c, i);
-			}
-		}
+		java.util.stream.IntStream.range(0, strings.length).forEach(i ->
+				map.compute(strings[i].charAt(0), (k, v) -> {
+					if(v == null) return i;
+					Collections.swap(Arrays.asList(strings), i, v);
+					return null;
+				}));
 		return strings;
 	}
 

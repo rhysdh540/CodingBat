@@ -1,6 +1,3 @@
-/**
- * going for readability over golf here
- */
 @SuppressWarnings("unused")
 public class Recursion2 {
 	/**
@@ -13,9 +10,10 @@ public class Recursion2 {
 	 * progress down the array.
 	 */
 	public boolean groupSum(int start, int[] nums, int target) {
-		if(start >= nums.length)
-			return target == 0;
-		return groupSum(start + 1, nums, target - nums[start]) || groupSum(start + 1, nums, target);
+		return start >= nums.length
+				? target == 0
+				: groupSum(start + 1, nums, target - nums[start])
+					|| groupSum(start + 1, nums, target);
 	}
 
 	/**
@@ -24,11 +22,11 @@ public class Recursion2 {
 	 * that all 6's must be chosen. (No loops needed.)
 	 */
 	public boolean groupSum6(int start, int[] nums, int target) {
-		if(start >= nums.length)
-			return target == 0;
-		if(nums[start] == 6)
-			return groupSum6(start + 1, nums, target - nums[start]);
-		return groupSum6(start + 1, nums, target - nums[start]) || groupSum6(start + 1, nums, target);
+		return start >= nums.length
+				? target == 0 : nums[start] == 6
+				? groupSum6(start + 1, nums, target - nums[start])
+					: groupSum6(start + 1, nums, target - nums[start])
+						|| groupSum6(start + 1, nums, target);
 	}
 
 	/**
@@ -37,9 +35,10 @@ public class Recursion2 {
 	 * in the group, the value immediately following it in the array must not be chosen. (No loops needed.)
 	 */
 	public boolean groupNoAdj(int start, int[] nums, int target) {
-		if(start >= nums.length)
-			return target == 0;
-		return groupNoAdj(start + 2, nums, target - nums[start]) || groupNoAdj(start + 1, nums, target);
+		return start >= nums.length
+				? target == 0
+				: groupNoAdj(start + 2, nums, target - nums[start])
+					|| groupNoAdj(start + 1, nums, target);
 	}
 
 	/**
@@ -49,14 +48,17 @@ public class Recursion2 {
 	 * be chosen. (No loops needed.)
 	 */
 	public boolean groupSum5(int start, int[] nums, int target) {
-		if(start >= nums.length)
-			return target == 0;
-		if(nums[start] % 5 == 0) {
-			if(start < nums.length - 1 && nums[start + 1] == 1)
-				return groupSum5(start + 2, nums, target - nums[start]);
-			return groupSum5(start + 1, nums, target - nums[start]);
-		}
-		return groupSum5(start + 1, nums, target - nums[start]) || groupSum5(start + 1, nums, target);
+		return start >= nums.length && target == 0
+				|| start < nums.length
+				&& (nums[start] % 5 == 0
+					&& (start < nums.length - 1
+						&& nums[start + 1] == 1
+						&& groupSum5(start + 2, nums, target - nums[start])
+						|| (start >= nums.length - 1 || nums[start + 1] != 1)
+						&& groupSum5(start + 1, nums, target - nums[start]))
+					|| nums[start] % 5 != 0
+					&& (groupSum5(start + 1, nums, target - nums[start])
+						|| groupSum5(start + 1, nums, target)));
 	}
 
 	/**
@@ -85,9 +87,9 @@ public class Recursion2 {
 	}
 
 	private boolean splitArray(int start, int[] nums, int sum1, int sum2) {
-		if(start >= nums.length)
-			return sum1 == sum2;
-		return splitArray(start + 1, nums, sum1 + nums[start], sum2) || splitArray(start + 1, nums, sum1, sum2 + nums[start]);
+		return start >= nums.length ? sum1 == sum2
+				: splitArray(start + 1, nums, sum1 + nums[start], sum2)
+				|| splitArray(start + 1, nums, sum1, sum2 + nums[start]);
 	}
 
 	/**
@@ -101,9 +103,10 @@ public class Recursion2 {
 	}
 
 	private boolean splitOdd10(int start, int[] nums, int sum1, int sum2) {
-		if(start >= nums.length)
-			return (sum1 % 10 == 0 && sum2 % 2 == 1) || (sum1 % 2 == 1 && sum2 % 10 == 0);
-		return splitOdd10(start + 1, nums, sum1 + nums[start], sum2) || splitOdd10(start + 1, nums, sum1, sum2 + nums[start]);
+		return start >= nums.length
+				? (sum1 % 10 == 0 && sum2 % 2 == 1) || (sum1 % 2 == 1 && sum2 % 10 == 0)
+				: splitOdd10(start + 1, nums, sum1 + nums[start], sum2)
+					|| splitOdd10(start + 1, nums, sum1, sum2 + nums[start]);
 	}
 
 	/**
@@ -117,12 +120,11 @@ public class Recursion2 {
 	}
 
 	private boolean split53(int start, int[] nums, int sum1, int sum2) {
-		if(start >= nums.length)
-			return sum1 == sum2;
-		if(nums[start] % 5 == 0)
-			return split53(start + 1, nums, sum1 + nums[start], sum2);
-		if(nums[start] % 3 == 0)
-			return split53(start + 1, nums, sum1, sum2 + nums[start]);
-		return split53(start + 1, nums, sum1 + nums[start], sum2) || split53(start + 1, nums, sum1, sum2 + nums[start]);
+		return start >= nums.length
+				? sum1 == sum2 : nums[start] % 5 == 0
+				? split53(start + 1, nums, sum1 + nums[start], sum2) : nums[start] % 3 == 0
+				? split53(start + 1, nums, sum1, sum2 + nums[start])
+					: split53(start + 1, nums, sum1 + nums[start], sum2)
+						|| split53(start + 1, nums, sum1, sum2 + nums[start]);
 	}
 }

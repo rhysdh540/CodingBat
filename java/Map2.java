@@ -119,7 +119,7 @@ public class Map2 {
 		for(int i = 0; i < strings.length; i++) {
 			char c = strings[i].charAt(0);
 			if(map.getOrDefault(c, -1) >= 0) {
-				@SuppressWarnings("DataFlowIssue") // map.containsKey(c) is true, so map.put can't return null
+				@SuppressWarnings("DataFlowIssue") // technically not safe but it doesn't fail anyways
 				int temp = map.put(c, -1);
 				result[i] = result[temp];
 				result[temp] = strings[i];

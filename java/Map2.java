@@ -118,15 +118,14 @@ public class Map2 {
 
 		for(int i = 0; i < strings.length; i++) {
 			char c = strings[i].charAt(0);
-			if(map.containsKey(c) && map.get(c) >= 0) {
+			if(map.getOrDefault(c, -1) >= 0) {
 				@SuppressWarnings("DataFlowIssue") // map.containsKey(c) is true, so map.put can't return null
 				int temp = map.put(c, -1);
 				result[i] = result[temp];
 				result[temp] = strings[i];
 			} else {
 				result[i] = strings[i];
-				if(!map.containsKey(c))
-					map.put(c, i);
+				map.putIfAbsent(c, i);
 			}
 		}
 		return result;

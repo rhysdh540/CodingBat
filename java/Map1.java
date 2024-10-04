@@ -1,6 +1,9 @@
 import java.util.Map;
 
-@SuppressWarnings({"unused", "ConditionalExpressionWithIdenticalBranches"}) // using them for the side effect
+@SuppressWarnings({"unused",
+		"ConditionalExpressionWithIdenticalBranches", // using for the side effect
+		"StringEquality" // shorter than `== null`
+})
 public class Map1 {
 	/**
 	 * Modify and return the given map as follows: if the key "a" has a value, set the key "b" to have that value,
@@ -8,7 +11,7 @@ public class Map1 {
 	 * taking the value and replacing it with the empty string.
 	 */
 	public Map<String, String> mapBully(Map<String, String> map) {
-		map.computeIfPresent("a", (k, v) -> map.put("b", v) == null ? "" : "");
+		map.computeIfPresent("a", (k, v) -> map.put("b", v) == "" ? "" : "");
 		return map;
 	}
 
@@ -18,7 +21,7 @@ public class Map1 {
 	 * leaving the rest of the map unchanged.
 	 */
 	public Map<String, String> mapShare(Map<String, String> map) {
-		map.computeIfPresent("a", (k, v) -> map.put("b", v) == null ? v : v);
+		map.computeIfPresent("a", (k, v) -> map.put("b", v) == "" ? v : v);
 		map.remove("c");
 		return map;
 	}
@@ -30,7 +33,7 @@ public class Map1 {
 	public Map<String, String> mapAB(Map<String, String> map) {
 		map.computeIfPresent("a", (k, v) ->
 				map.computeIfPresent("b", (k2, v2) ->
-						map.put("ab", v + v2) == null ? v2 : v2) == null ? v : v);
+						map.put("ab", v + v2) == null ? v2 : v2) == "" ? v : v);
 		return map;
 	}
 
@@ -51,7 +54,7 @@ public class Map1 {
 	 * If the key "spinach" has a value, change that value to "nuts".
 	 */
 	public Map<String, String> topping2(Map<String, String> map) {
-		map.computeIfPresent("ice cream", (k, v) -> map.put("yogurt", v) == null ? v : v);
+		map.computeIfPresent("ice cream", (k, v) -> map.put("yogurt", v) == "" ? v : v);
 		map.computeIfPresent("spinach", (k, v) -> "nuts");
 		return map;
 	}
@@ -62,8 +65,8 @@ public class Map1 {
 	 * If the key "salad" has a value, set that as the value for the key "spinach".
 	 */
 	public Map<String, String> topping3(Map<String, String> map) {
-		map.computeIfPresent("potato", (k, v) -> map.put("fries", v) == null ? v : v);
-		map.computeIfPresent("salad", (k, v) -> map.put("spinach", v) == null ? v : v);
+		map.computeIfPresent("potato", (k, v) -> map.put("fries", v) == "" ? v : v);
+		map.computeIfPresent("salad", (k, v) -> map.put("spinach", v) == "" ? v : v);
 		return map;
 	}
 

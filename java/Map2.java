@@ -1,7 +1,9 @@
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class Map2 {
@@ -11,8 +13,7 @@ public class Map2 {
 	 * makes the pair "hello":0. We'll do more complicated counting later, but for this problem the value is simply 0.
 	 */
 	public Map<String, Integer> word0(String[] strings) {
-		return Arrays.stream(strings)
-				.collect(HashMap::new, (m, s) -> m.put(s, 0), Map::putAll);
+		return Arrays.stream(strings).distinct().collect(Collectors.toMap(s -> s, s -> 0));
 	}
 
 	/**
@@ -20,8 +21,7 @@ public class Map2 {
 	 * for every different string in the array, and the value is that string's length.
 	 */
 	public Map<String, Integer> wordLen(String[] strings) {
-		return Arrays.stream(strings)
-				.collect(HashMap::new, (m, s) -> m.put(s, s.length()), Map::putAll);
+		return Arrays.stream(strings).distinct().collect(Collectors.toMap(s -> s, String::length));
 	}
 
 	/**
@@ -29,10 +29,11 @@ public class Map2 {
 	 * for each string add its first character as a key with its last character as the value.
 	 */
 	public Map<String, String> pairs(String[] strings) {
-		return Arrays.stream(strings)
-				.collect(HashMap::new,
-						(m, s) -> m.put(s.substring(0, 1), s.substring(s.length() - 1)),
-						Map::putAll);
+		return Arrays.stream(strings).collect(Collectors.toMap(
+				s -> s.substring(0, 1),
+				s -> s.substring(s.length() - 1),
+				(a, b) -> b
+		));
 	}
 
 	/**
@@ -40,10 +41,7 @@ public class Map2 {
 	 * with a key for each different string, with the value the number of times that string appears in the array.
 	 */
 	public Map<String, Integer> wordCount(String[] strings) {
-		return Arrays.stream(strings)
-				.collect(HashMap::new,
-						(m, s) -> m.put(s, m.getOrDefault(s, 0) + 1),
-						Map::putAll);
+		return Arrays.stream(strings).collect(Collectors.toMap(s -> s, s -> 1, Integer::sum));
 	}
 
 	/**
@@ -51,12 +49,7 @@ public class Map2 {
 	 * with the value of all the strings starting with that character appended together in the order they appear in the array.
 	 */
 	public Map<String, String> firstChar(String[] strings) {
-		return Arrays.stream(strings)
-				.collect(HashMap::new,
-						(m, s) -> m.put(s.substring(0, 1), m.containsKey(s.substring(0, 1))
-								? m.get(s.substring(0, 1)) + s
-								: s),
-						Map::putAll);
+		return Arrays.stream(strings).collect(Collectors.groupingBy(s -> s.substring(0, 1), Collectors.joining()));
 	}
 
 	/**
@@ -64,14 +57,10 @@ public class Map2 {
 	 * in the array, append the string to the result. Return the empty string if no string appears a 2nd time.
 	 */
 	public String wordAppend(String[] strings) {
-		HashMap<String, Integer> map = new HashMap<>();
+		Map<String, Integer> map = new HashMap<>();
 		return Arrays.stream(strings)
 				.collect(StringBuilder::new,
-						(sb, s) -> {
-							map.put(s, map.getOrDefault(s, 0) + 1);
-							if(map.get(s) % 2 == 0)
-								sb.append(s);
-						},
+						(sb, s) -> sb.append(map.merge(s, 1, Integer::sum) % 2 == 0 ? s : ""), // update map and append if even
 						StringBuilder::append)
 				.toString();
 	}
@@ -112,22 +101,13 @@ public class Map2 {
 	 * this can be solved making just one pass over the array. More difficult than it looks.
 	 */
 	public String[] firstSwap(String[] strings) {
-		//TODO shorten
-		String[] result = new String[strings.length];
 		Map<Character, Integer> map = new HashMap<>();
-
-		for(int i = 0; i < strings.length; i++) {
-			char c = strings[i].charAt(0);
-			if(map.getOrDefault(c, -1) >= 0) {
-				@SuppressWarnings("DataFlowIssue") // technically not safe but it doesn't fail anyways
-				int temp = map.put(c, -1);
-				result[i] = result[temp];
-				result[temp] = strings[i];
-			} else {
-				result[i] = strings[i];
-				map.putIfAbsent(c, i);
-			}
-		}
-		return result;
+		java.util.stream.IntStream.range(0, strings.length).forEach(i ->
+				map.compute(strings[i].charAt(0), (key, value) -> {
+					if(value == null) return i;
+					Collections.swap(Arrays.asList(strings), i, value == -1 ? i : value); // swap with itself if already swapped
+					return -1;
+				}));
+		return strings;
 	}
 }

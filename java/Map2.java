@@ -1,7 +1,6 @@
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -32,7 +31,7 @@ public class Map2 {
 		return Arrays.stream(strings).collect(Collectors.toMap(
 				s -> s.substring(0, 1),
 				s -> s.substring(s.length() - 1),
-				(a, b) -> b
+				(a, b) -> b // make sure to use the latest string if there are duplicates
 		));
 	}
 
@@ -41,7 +40,7 @@ public class Map2 {
 	 * with a key for each different string, with the value the number of times that string appears in the array.
 	 */
 	public Map<String, Integer> wordCount(String[] strings) {
-		return Arrays.stream(strings).collect(Collectors.toMap(s -> s, s -> 1, Integer::sum));
+		return Arrays.stream(strings).collect(Collectors.groupingBy(s -> s, Collectors.summingInt(s -> 1)));
 	}
 
 	/**
@@ -59,10 +58,8 @@ public class Map2 {
 	public String wordAppend(String[] strings) {
 		Map<String, Integer> map = new HashMap<>();
 		return Arrays.stream(strings)
-				.collect(StringBuilder::new,
-						(sb, s) -> sb.append(map.merge(s, 1, Integer::sum) % 2 == 0 ? s : ""), // update map and append if even
-						StringBuilder::append)
-				.toString();
+				.filter(s -> map.merge(s, 1, Integer::sum) % 2 == 0) // update map and filter if even
+				.collect(Collectors.joining());
 	}
 
 	/**
@@ -70,10 +67,7 @@ public class Map2 {
 	 * if that string appears 2 or more times in the array.
 	 */
 	public Map<String, Boolean> wordMultiple(String[] strings) {
-		return Arrays.stream(strings)
-				.collect(HashMap::new,
-						(m, s) -> m.put(s, m.containsKey(s)),
-						Map::putAll);
+		return Arrays.stream(strings).collect(Collectors.toMap(s -> s, s -> false, (a, b) -> true));
 	}
 
 	/**

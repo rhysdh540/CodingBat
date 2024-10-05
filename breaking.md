@@ -40,5 +40,8 @@ and some workarounds:
 
 other stuff:
 
-you can change the method signature (notably the return type)
-- this is useful since you can't print stuff out, so you can change the return type to `String` and return the value you want to print out
+- you can change the method signature (notably the return type)
+  - this is useful since you can't print stuff out, so you can change the return type to `String` and return the value you want to print out
+- it runs in a class called `Shell`
+- anonymous classes aren't blocked but don't work anyways
+- https://codingbat.com/prob/p1 exists - it doesn't work by default but if you remove the bracket it does

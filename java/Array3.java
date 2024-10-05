@@ -1,8 +1,7 @@
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @SuppressWarnings("unused")
 public class Array3 {
@@ -30,10 +29,10 @@ public class Array3 {
 	public int[] fix34(int[] nums) {
 		//TODO shorten
 		List<Integer> list = Arrays.stream(nums).boxed().collect(Collectors.toList());
-		for(int i = 0, j = list.indexOf(4); i < list.size(); i++)
-			if(list.get(i) == 3) {
-				list.set(i + 1, list.set(j, list.get(i + 1)));
-				j = list.subList(j, list.size()).indexOf(4) + j;
+		for(int i = 1, f = list.indexOf(4); i < list.size(); i++)
+			if(list.get(i - 1) == 3) {
+				Collections.swap(list, i, f);
+				f += list.subList(f, list.size()).indexOf(4);
 			}
 		return list.stream().mapToInt(k -> k).toArray();
 	}
@@ -49,10 +48,13 @@ public class Array3 {
 	public int[] fix45(int[] nums) {
 		//TODO shorten
 		List<Integer> list = Arrays.stream(nums).boxed().collect(Collectors.toList());
-		for(int i = 0; i < list.size() - 1; i++)
-			if(list.get(i) == 4 && list.get(i + 1) != 5)
+		for(int i = 1; i < list.size(); i++)
+			if(list.get(i - 1) == 4 && list.get(i) != 5)
 				for(int j = 0; j < list.size(); j++)
-					list.set(list.get(j) == 5 && j == 0 ? 0 : list.get(j) == 5 && list.get(j - 1) != 4 ? j : i + 1, list.set(i + 1, 5));
+					list.set(
+							list.get(j) == 5 ? j == 0 ? 0 : list.get(j - 1) != 4 ? j : i : i,
+							list.set(i, 5)
+					);
 		return list.stream().mapToInt(i -> i).toArray();
 	}
 
@@ -118,14 +120,12 @@ public class Array3 {
 	/**
 	 * Say that a "clump" in an array is a series of 2 or more adjacent elements of the same value.
 	 * Return the number of clumps in the given array.
-	 *
-	 * @see String3#maxBlock(String) regexplanation
 	 */
-	@SuppressWarnings("RegExpSuspiciousBackref")
 	public int countClumps(int[] nums) {
-		return (int) Arrays.stream(Arrays.toString(nums).replaceAll("[\\[\\], ]", "")
-						.split("(?<=(.))(?!\\1)"))
-				.filter(s -> s.length() > 1)
-				.count();
+		// regex: (\\d) matches a number
+		// (, \\1)+ matches a comma-space followed by the same number
+		// the number of matches - 1 is the number of clumps
+		return Arrays.toString(nums)
+				.split("(\\d)(, \\1)+").length - 1;
 	}
 }

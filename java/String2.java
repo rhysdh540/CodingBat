@@ -115,7 +115,10 @@ public class String2 {
 	 * chars to the left and right of the "xyz" must differ by at most one. This problem is harder than it looks.
 	 */
 	public boolean xyzMiddle(String str) { // completely illegible
-		return str.length() >= 3 && (str.length() % 2 == 0 && ("xyz".equals(str.substring(str.length() / 2 - 2, str.length() / 2 + 1))) || "xyz".equals(str.substring(str.length() / 2 - 1, str.length() / 2 + 2)));
+		return str.length() >= 3
+				&& (str.length() % 2 == 0
+						&& ("xyz".equals(str.substring(str.length() / 2 - 2, str.length() / 2 + 1)))
+					|| "xyz".equals(str.substring(str.length() / 2 - 1, str.length() / 2 + 2)));
 	}
 
 	/**

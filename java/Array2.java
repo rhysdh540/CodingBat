@@ -272,16 +272,15 @@ public class Array2 {
 	 * Note that it is valid in java to create an array of length 0.
 	 */
 	public int[] post4(int[] nums) {
-		//copy from the LAST index of 4 to the end of the array
-		return Arrays.stream(nums) // convert from int[] to IntStream
-				.boxed() // convert from IntStream to Stream<Integer>
-				.collect(Collectors.toList()) // convert from Stream<Integer> to List<Integer>
+		return Arrays.stream(nums)
+				.boxed()
+				.collect(Collectors.toList())
 				.subList(
 						Arrays.stream(nums)
 								.boxed()
 								.collect(Collectors.toList())
-								.lastIndexOf(4)
-								+ 1, nums.length) // get the last index of 4
+								.lastIndexOf(4) + 1,
+						nums.length) // at this point we have a List<Integer> that is from the last index of 4 to the end of the array
 				.stream()
 				.mapToInt(Integer::intValue) // convert back to IntStream
 				.toArray(); // and back to int[]

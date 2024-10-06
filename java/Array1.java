@@ -214,9 +214,7 @@ public class Array1 {
 	 * but there will be 2 or more elements available between the 2 arrays.
 	 */
 	public int[] make2(int[] a, int[] b) {
-		return java.util.stream.IntStream.concat(
-						Arrays.stream(a),
-						Arrays.stream(b))
+		return java.util.stream.IntStream.concat(Arrays.stream(a), Arrays.stream(b))
 				.limit(2)
 				.toArray();
 	}

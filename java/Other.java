@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class Other {
 	// https://codingbat.com/prob/p245847
 	public int computeSumOfSquares(int n){
-		return java.util.stream.IntStream.range(1, n + 1).map(i -> i * i).sum();
+		return n++ * n-- * (2 * n + 1) / 6;
 	}
 
 	// https://codingbat.com/prob/p210233
@@ -60,7 +60,7 @@ public class Other {
 		return str.isEmpty() ? "" :
 				new String(new char[10]).replace("\0", str).substring(0, numChars) // str with correct length
 						.chars()
-						.mapToObj(c -> new String(new char[numTimes]).replace("\0", String.valueOf((char) c)))
+						.mapToObj(c -> new String(new char[numTimes]).replace('\0', (char) c))
 						.collect(Collectors.joining());
 	}
 

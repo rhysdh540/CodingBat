@@ -5,7 +5,7 @@ public class Recursion1 {
 	 * Compute the result recursively (without loops).
 	 */
 	public int factorial(int n) {
-		return n == 1 ? 1 : n * factorial(n - 1);
+		return n == 1 ? 1 : n * factorial(--n);
 	}
 
 	/**
@@ -13,7 +13,7 @@ public class Recursion1 {
 	 * across all the bunnies recursively (without loops or multiplication).
 	 */
 	public int bunnyEars(int bunnies) { // why not just return bunnies * 2? :(
-		return bunnies == 0 ? 0 : 2 + bunnyEars(bunnies - 1);
+		return bunnies == 0 ? 0 : 2 + bunnyEars(--bunnies);
 	}
 
 	/**
@@ -23,7 +23,7 @@ public class Recursion1 {
 	 * fibonacci(n) method that returns the nth fibonacci number, with n=0 representing the start of the sequence.
 	 */
 	public int fibonacci(int n) {
-		return n < 2 ? n : fibonacci(n - 1) + fibonacci(n - 2);
+		return n < 2 ? n : fibonacci(--n) + fibonacci(--n);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class Recursion1 {
 	 * number of "ears" in the bunny line 1, 2, ... n (without loops or multiplication).
 	 */
 	public int bunnyEars2(int bunnies) { // return (int)(2.5 * bunnies);
-		return bunnies == 0 ? 0 : (bunnies % 2 == 0 ? 3 : 2) + bunnyEars2(bunnies - 1);
+		return bunnies == 0 ? 0 : (bunnies % 2 == 0 ? 3 : 2) + bunnyEars2(--bunnies);
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class Recursion1 {
 	 * triangle with the given number of rows.
 	 */
 	public int triangle(int rows) { // return rows * (rows + 1) / 2;
-		return rows == 0 ? 0 : rows + triangle(rows - 1);
+		return rows == 0 ? 0 : rows + triangle(--rows);
 	}
 
 	/**
@@ -77,21 +77,21 @@ public class Recursion1 {
 	 * powerN(3, 2) is 9 (3 squared).
 	 */
 	public int powerN(int base, int n) {
-		return n == 0 ? 1 : base * powerN(base, n - 1);
+		return n == 0 ? 1 : base * powerN(base, --n);
 	}
 
 	/**
 	 * Given a string, compute recursively (no loops) the number of lowercase 'x' chars in the string.
 	 */
 	public int countX(String str) {
-		return str.isEmpty() ? 0 : (str.charAt(0) == 'x' ? 1 : 0) + countX(str.substring(1));
+		return str.isEmpty() ? 0 : (str.startsWith("x") ? 1 : 0) + countX(str.substring(1));
 	}
 
 	/**
 	 * Given a string, compute recursively (no loops) the number of times lowercase "hi" appears in the string.
 	 */
 	public int countHi(String str) {
-		return str.length() < 2 ? 0 : (str.startsWith("hi") ? 1 : 0) + countHi(str.substring(1));
+		return str.isEmpty() ? 0 : (str.startsWith("hi") ? 1 : 0) + countHi(str.substring(1));
 	}
 
 	/**
@@ -99,14 +99,14 @@ public class Recursion1 {
 	 * where all the lowercase 'x' chars have been changed to 'y' chars.
 	 */
 	public String changeXY(String str) {
-		return str.isEmpty() ? "" : (str.charAt(0) == 'x' ? 'y' : str.charAt(0)) + changeXY(str.substring(1));
+		return str.isEmpty() ? "" : (str.startsWith("x") ? 'y' : str.charAt(0)) + changeXY(str.substring(1));
 	}
 
 	/**
 	 * Given a string, compute recursively (no loops) a new string where all appearances of "pi" have been replaced by "3.14".
 	 */
 	public String changePi(String str) {
-		return str.length() < 2 ? str :
+		return str.isEmpty() ? str :
 				(str.startsWith("pi") ? "3.14" : str.charAt(0)) + changePi(str.substring(str.startsWith("pi") ? 2 : 1));
 		// return str.replace("pi", "3.14");
 	}
@@ -115,7 +115,7 @@ public class Recursion1 {
 	 * Given a string, compute recursively a new string where all the 'x' chars have been removed.
 	 */
 	public String noX(String str) {
-		return str.isEmpty() ? "" : (str.charAt(0) == 'x' ? "" : str.charAt(0)) + noX(str.substring(1));
+		return str.isEmpty() ? "" : (str.startsWith("x") ? "" : str.charAt(0)) + noX(str.substring(1));
 	}
 
 	/**
@@ -262,11 +262,13 @@ public class Recursion1 {
 	 */
 	public int strDist(String str, String sub) {
 		return str.length() < sub.length()
-				? 0
+					? 0
 				: str.startsWith(sub) && str.endsWith(sub)
-				? str.length()
-				: strDist(str.startsWith(sub)
-				? str.substring(0, str.length() - 1)
-				: str.substring(1), sub);
+					? str.length()
+				: strDist(
+						str.startsWith(sub)
+								? str.substring(0, str.length() - 1)
+								: str.substring(1), sub
+				);
 	}
 }

@@ -40,7 +40,7 @@ public class Map2 {
 	 * with a key for each different string, with the value the number of times that string appears in the array.
 	 */
 	public Map<String, Integer> wordCount(String[] strings) {
-		return Arrays.stream(strings).collect(Collectors.groupingBy(s -> s, Collectors.summingInt(s -> 1)));
+		return Arrays.stream(strings).collect(Collectors.toMap(s -> s, s -> 1, Integer::sum));
 	}
 
 	/**

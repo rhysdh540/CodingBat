@@ -19,7 +19,7 @@ def make_tags(tag, word):
     In this example, the "i" tag makes <i> and </i> which surround the word "Yay".
     Given tag and word strings, create the HTML string with tags around the word, e.g. "<i>Yay</i>".
     """
-    return "<" + tag + ">" + word + "</" + tag + ">"
+    return "<%s>%s</%s>" % (tag, word, tag)
 
 
 def make_out_word(out, word):

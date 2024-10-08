@@ -79,7 +79,7 @@ public class Logic1 {
 	 * or greater or equal to 10.
 	 */
 	public boolean in1To10(int n, boolean outsideMode) {
-		return (outsideMode) ? (n < 2 || n > 9) : (n > 0 && n < 11);
+		return n == 1 || n == 10 || outsideMode == n < 2 || n > 9;
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class Logic1 {
 	 * Return true if the given non-negative number is special. Use the % "mod" operator -- see Introduction to Mod
 	 */
 	public boolean specialEleven(int n) {
-		return n % 11 == 0 || n % 11 == 1;
+		return n % 11 < 2;
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class Logic1 {
 	 * @see <a href="https://codingbat.com/doc/practice/mod-introduction.html">Introduction to Mod</a>
 	 */
 	public boolean more20(int n) {
-		return n % 20 == 1 || n % 20 == 2;
+		return ((n % 20 - 1) & ~1) == 0;
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class Logic1 {
 	 * @see <a href="https://codingbat.com/doc/practice/mod-introduction.html">Introduction to Mod</a>
 	 */
 	public boolean less20(int n) {
-		return n % 20 == 19 || n % 20 == 18;
+		return ((n % 20 - 18) & ~1) == 0;
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class Logic1 {
 	 * @see <a href="https://codingbat.com/doc/practice/mod-introduction.html">Introduction to Mod</a>
 	 */
 	public boolean nearTen(int num) {
-		return num % 10 < 3 || num % 10 > 7;
+		return (num % 10 & 7) < 3;
 	}
 
 	/**
@@ -162,8 +162,7 @@ public class Logic1 {
 	 * (See also: <a href="https://codingbat.com/doc/practice/fizzbuzz-code.html">FizzBuzz Code</a>)
 	 */
 	public String fizzString(String str) {
-		return str.startsWith("f") ? (str.endsWith("b") ? "FizzBuzz" : "Fizz")
-				: (str.endsWith("b") ? "Buzz" : str);
+		return str.startsWith("f") ? (str.endsWith("b") ? "FizzBuzz" : "Fizz") : (str.endsWith("b") ? "Buzz" : str);
 	}
 
 	/**
@@ -175,7 +174,7 @@ public class Logic1 {
 	 * (See also: <a href="https://codingbat.com/doc/practice/fizzbuzz-code.html">FizzBuzz Code</a>)
 	 */
 	public String fizzString2(int n) {
-		return ((n % 3 == 0 && n % 5 == 0) ? "FizzBuzz"
+		return ((n % 15 == 0) ? "FizzBuzz"
 				: (n % 3 == 0) ? "Fizz"
 				: (n % 5 == 0) ? "Buzz"
 				: n) + "!";
@@ -211,7 +210,8 @@ public class Logic1 {
 	 * The ints are non-negative. Note: the % "mod" operator computes the remainder, e.g. 17 % 10 is 7.
 	 */
 	public boolean lastDigit(int a, int b, int c) {
-		return a % 10 == b % 10 || a % 10 == c % 10 || b % 10 == c % 10;
+//		return a % 10 == b % 10 || a % 10 == c % 10 || b % 10 == c % 10;
+		return (a %= 10) == (b %= 10) || a == (c %= 10) || b == c;
 	}
 
 	/**
@@ -227,9 +227,7 @@ public class Logic1 {
 	 * wrapping around to 1 if its value was 6.
 	 */
 	public int withoutDoubles(int die1, int die2, boolean noDoubles) {
-		return (noDoubles && die1 == die2)
-				? (die1 == 6) ? 7 : die1 + die2 + 1
-				: die1 + die2;
+		return die1 + (noDoubles && die1 == die2 ? die2 % 6 + 1 : die2);
 	}
 
 	/**
@@ -240,7 +238,7 @@ public class Logic1 {
 	 */
 	public int maxMod5(int a, int b) {
 		return (a == b) ? 0
-				: (a % 5 == b % 5) ? Math.min(a, b)
+				: (a - b) % 5 == 0 ? Math.min(a, b)
 				: Math.max(a, b);
 	}
 

@@ -68,4 +68,40 @@ public class Other {
 	public String makeThreeZ(String str) {
 		return str.replace("z", "zzz");
 	}
+
+	// https://codingbat.com/prob/p237678
+	@SuppressWarnings("MismatchedReadAndWriteOfArray") // false positive
+	public String string_mockingText(String str) {
+		boolean[] upper = {true};
+		return str.chars()
+				.mapToObj(c -> String.valueOf((char)
+						(Character.isLetter(c) && (upper[0] = !upper[0])
+								? Character.toUpperCase(c)
+								: Character.toLowerCase(c)
+						)))
+				.collect(Collectors.joining());
+	}
+
+	// https://codingbat.com/prob/p292391
+	public double productOfFourths(int n) {
+		return n++ == 0 ? 0 : java.util.stream.IntStream.range(1, n)
+				.mapToDouble(i -> i / 4.0)
+				.reduce(1, (a, b) -> a * b);
+	}
+
+	// https://codingbat.com/prob/p201307
+	public double sumOfSevenths(int n){
+		return java.util.stream.IntStream.range(1, n + 1)
+				.mapToDouble(i -> i / 7d)
+				.sum();
+	}
+
+	// https://codingbat.com/prob/p228836
+	public int[] array_optimusPrime(int num){
+		return java.util.stream.IntStream.rangeClosed(2, num)
+				.filter(i -> java.util.stream.IntStream.rangeClosed(2, (int) Math.sqrt(i))
+						.noneMatch(j -> i % j == 0))
+				.toArray();
+	}
+
 }

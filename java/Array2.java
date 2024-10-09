@@ -54,7 +54,7 @@ public class Array2 {
 												.split("( )?6(.*?)7( )?")) // possible whitespace + 6 + anything + 7 + possible whitespace
 								.split(" ")
 				)
-				.mapToInt(s -> s.isEmpty() ? 0 : Integer.parseInt(s))
+				.mapToInt(s -> (int) Double.parseDouble(s + ".0"))
 				.sum();
 	}
 
@@ -262,7 +262,11 @@ public class Array2 {
 	 * Note that it is valid in java to create an array of length 0.
 	 */
 	public int[] pre4(int[] nums) {
-		return Arrays.copyOf(nums, Arrays.binarySearch(nums, 4));
+		return Arrays.copyOf(nums, Arrays.stream(nums).boxed().collect(Collectors.toList()).indexOf(4));
+
+		// technically the following works:
+		// return Arrays.copyOf(nums, Arrays.binarySearch(nums, 4));
+		// but it's not correct for all inputs, just the ones the tests use
 	}
 
 	/**
@@ -272,18 +276,7 @@ public class Array2 {
 	 * Note that it is valid in java to create an array of length 0.
 	 */
 	public int[] post4(int[] nums) {
-		return Arrays.stream(nums)
-				.boxed()
-				.collect(Collectors.toList())
-				.subList(
-						Arrays.stream(nums)
-								.boxed()
-								.collect(Collectors.toList())
-								.lastIndexOf(4) + 1,
-						nums.length) // at this point we have a List<Integer> that is from the last index of 4 to the end of the array
-				.stream()
-				.mapToInt(Integer::intValue) // convert back to IntStream
-				.toArray(); // and back to int[]
+		return Arrays.copyOfRange(nums, Arrays.stream(nums).boxed().collect(Collectors.toList()).lastIndexOf(4) + 1, nums.length);
 	}
 
 	/**

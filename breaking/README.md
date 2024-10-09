@@ -44,4 +44,12 @@ other stuff:
   - this is useful since you can't print stuff out, so you can change the return type to `String` and return the value you want to print out
 - it runs in a class called `Shell`
 - anonymous classes aren't blocked but don't work anyways
-- https://codingbat.com/prob/p1 exists - it doesn't work by default but if you remove the bracket it does
+
+### problem numbering
+- usually in the format p[6 digit number]
+  - https://codingbat.com/prob/p1 is the exception
+- ranges:
+  - p000000-p099999 is empty
+  - p100000-p199999 is very sparse
+  - p299999 and above are empty
+    - with the exception of p375379 for some reason

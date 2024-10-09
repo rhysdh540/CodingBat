@@ -40,11 +40,11 @@ def sum67(nums):
     (every 6 will be followed by at least one 7). Return 0 for no numbers.
     """
     return reduce(
-        lambda acc, x: (
-            (acc[0], False) if x == 6 else
-            (acc[0], True) if x == 7 and not acc[1] else
-            (acc[0] + x, acc[1]) if acc[1] else
-            (acc[0], acc[1])
+        lambda sum, x: (
+            (sum[0], False) if x == 6 else
+            (sum[0], True) if x == 7 and not sum[1] else
+            (sum[0] + x, sum[1]) if sum[1] else
+            (sum[0], sum[1])
         ),
         nums,
         (0, True)

@@ -39,14 +39,25 @@ def sum67(nums):
     except ignore sections of numbers starting with a 6 and extending to the next 7
     (every 6 will be followed by at least one 7). Return 0 for no numbers.
     """
-    # TODO shorten
-    while 6 in nums:
-        del nums[nums.index(6):nums.index(7, nums.index(6)) + 1]
-    return sum(nums)
+    return reduce(
+        lambda acc, x: (
+            (acc[0], False) if x == 6 else
+            (acc[0], True) if x == 7 and not acc[1] else
+            (acc[0] + x, acc[1]) if acc[1] else
+            (acc[0], acc[1])
+        ),
+        nums,
+        (0, True)
+    )[0]
 
 
 def has22(nums):
     """
     Given an array of ints, return True if the array contains a 2 next to a 2 somewhere.
     """
-    return reduce(lambda x, y: x or y, [nums[i] == nums[i + 1] == 2 for i in range(len(nums) - 1)], False)
+    # return reduce(lambda x, y: x or y, [nums[i] == nums[i + 1] == 2 for i in range(len(nums) - 1)], False)
+    return reduce(
+        lambda x, y: x or y,
+        [nums[i] == nums[i + 1] == 2 for i in range(len(nums) - 1)],
+        False
+    )

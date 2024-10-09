@@ -46,15 +46,14 @@ public class Array2 {
 	 * (every 6 will be followed by at least one 7). Return 0 for no numbers.
 	 */
 	public int sum67(int[] nums) {
-		return Arrays.stream(
-				String.join(" ",
-								Arrays.toString(nums)
-										.replaceAll("[\\[\\],]", "") // remove brackets
-										.split("( )?6(.*?)7( )?")) // possible whitespace + 6 + anything + 7 + possible whitespace
-						.split(" ")
-				)
-				.mapToInt(s -> (int) Double.parseDouble(s + ".0"))
-				.sum();
+		return Arrays.stream(nums).boxed().reduce(
+				new int[]{0, 1}, // [0]: accumulated sum, [1]: flag - 1 if should add numbers, 0 if should ignore
+				(sum, x) -> new int[]{
+						sum[0] + (sum[1] = x == 6 ? 0 : sum[1]) * x, // add the number if the flag is 1
+						x == 7 && sum[1] == 0 ? 1 : sum[1] // check if 7 after adding the number (if it's 7 and it changes the state, don't add it)
+				},
+				(a, b) -> a
+		)[0];
 	}
 
 	/**

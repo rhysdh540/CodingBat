@@ -79,7 +79,7 @@ public class Logic1 {
 	 * or greater or equal to 10.
 	 */
 	public boolean in1To10(int n, boolean outsideMode) {
-		return n == 1 || n == 10 || outsideMode == n < 2 || n > 9;
+		return n == 1 || n == 10 || outsideMode == (n < 2 || n > 9);
 	}
 
 	/**
@@ -210,7 +210,6 @@ public class Logic1 {
 	 * The ints are non-negative. Note: the % "mod" operator computes the remainder, e.g. 17 % 10 is 7.
 	 */
 	public boolean lastDigit(int a, int b, int c) {
-//		return a % 10 == b % 10 || a % 10 == c % 10 || b % 10 == c % 10;
 		return (a %= 10) == (b %= 10) || a == (c %= 10) || b == c;
 	}
 

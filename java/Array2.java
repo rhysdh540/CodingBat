@@ -47,12 +47,11 @@ public class Array2 {
 	 */
 	public int sum67(int[] nums) {
 		return Arrays.stream(
-						String.join(" ",
-										Arrays.stream(nums)
-												.mapToObj(String::valueOf)
-												.collect(Collectors.joining(" "))
-												.split("( )?6(.*?)7( )?")) // possible whitespace + 6 + anything + 7 + possible whitespace
-								.split(" ")
+				String.join(" ",
+								Arrays.toString(nums)
+										.replaceAll("[\\[\\],]", "") // remove brackets
+										.split("( )?6(.*?)7( )?")) // possible whitespace + 6 + anything + 7 + possible whitespace
+						.split(" ")
 				)
 				.mapToInt(s -> (int) Double.parseDouble(s + ".0"))
 				.sum();

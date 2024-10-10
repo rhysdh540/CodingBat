@@ -60,15 +60,15 @@ public class Array2 {
 	 * Given an array of ints, return true if the array contains a 2 next to a 2 somewhere.
 	 */
 	public boolean has22(int[] nums) {
-		return java.util.stream.IntStream.range(0, nums.length - 1)
-				.anyMatch(i -> nums[i] == 2 && nums[i + 1] == 2);
+		return java.util.stream.IntStream.range(1, nums.length)
+				.anyMatch(i -> nums[i--] == 2 && nums[i] == 2);
 	}
 
 	/**
 	 * Given an array of ints, return true if the array contains no 1's and no 3's.
 	 */
 	public boolean lucky13(int[] nums) {
-		return java.util.stream.IntStream.of(nums).noneMatch(i -> i == 1 || i == 3);
+		return Arrays.stream(nums).noneMatch(i -> i == 1 || i == 3);
 	}
 
 	/**
@@ -238,7 +238,7 @@ public class Array2 {
 	 */
 	public int[] shiftLeft(int[] nums) {
 		return nums.length == 0 ? nums : java.util.stream.IntStream.concat(
-						java.util.stream.IntStream.of(nums).skip(1), java.util.stream.IntStream.of(nums[0]))
+						Arrays.stream(nums).skip(1), java.util.stream.IntStream.of(nums[0]))
 				.toArray();
 	}
 

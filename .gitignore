@@ -3,3 +3,6 @@
 out/
 !**/src/main/**/out/
 .DS_Store
+
+breaking/.gradle/
+breaking/build/

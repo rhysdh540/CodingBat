@@ -1,6 +1,4 @@
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @SuppressWarnings({"unused",
 		"ConditionalExpressionWithIdenticalBranches", // using for the side effect

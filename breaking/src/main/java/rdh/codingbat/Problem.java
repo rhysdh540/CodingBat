@@ -16,7 +16,8 @@ public record Problem(
 		String description,
 		SequencedMap<String, String> tests,
 		double difficulty,
-		@Nullable String hint
+		@Nullable String hint,
+		boolean postSolutionAvailable
 ) implements Comparable<Problem>, Serializable {
 
 	public enum Language {
@@ -40,7 +41,19 @@ public record Problem(
 				"%sProblem[id=%s; \"%s\"]",
 				language,
 				Networking.formatProblemNumber(id),
-				(category == null ? "" : category + " ") + name
+				nameAndCategory()
 		);
+	}
+
+	public String nameAndCategory() {
+		return (category == null ? "" : category + " ") + name;
+	}
+
+	public boolean isOfficial() {
+		return category != null;
+	}
+
+	public String url() {
+		return Networking.makeUrl(id).toString();
 	}
 }

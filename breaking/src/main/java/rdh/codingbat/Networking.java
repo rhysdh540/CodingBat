@@ -43,8 +43,7 @@ public final class Networking {
 		} catch (SocketTimeoutException e) {
 			// we may have ddosed the codingbat server by accident, stop to be nice
 			System.err.println("\nTimeout on problem " + problemNumber);
-			System.exit(1);
-			throw new AssertionError();
+			throw e;
 		}
 	}
 

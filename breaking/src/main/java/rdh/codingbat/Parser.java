@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -31,6 +32,10 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 public final class Parser {
 	private final int numThreads;
@@ -46,7 +51,7 @@ public final class Parser {
 		this.outputBin = outputBin;
 
 		if(Files.exists(outputBin)) {
-			try(ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(outputBin))) {
+			try(ObjectInputStream ois = new ObjectInputStream(new GZIPInputStream(Files.newInputStream(outputBin)))) {
 				((Set<Problem>) ois.readObject()).forEach(p -> foundProblems.put(p.id(), p));
 			} catch (Throwable e) {
 				throw Networking.unchecked(e);
@@ -101,7 +106,7 @@ public final class Parser {
 			int size = foundProblems.size();
 			if(size % 100 == 0) {
 				synchronized(System.out) {
-					System.out.print("Parsed " + foundProblems.size() + " problems\r");
+					System.out.print("Parsed " + size + " problems\r");
 					System.out.flush();
 				}
 			}
@@ -145,8 +150,10 @@ public final class Parser {
 			throw Networking.unchecked(e);
 		}
 
-		try(ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(outputBin))) {
-			oos.writeObject(new ConcurrentSkipListSet<>(foundProblems.values()));
+		try(GZIPOutputStream gzos = new GZIPOutputStream(Files.newOutputStream(outputBin))) {
+			try(ObjectOutputStream oos = new ObjectOutputStream(gzos)) {
+				oos.writeObject(new ConcurrentSkipListSet<>(foundProblems.values()));
+			}
 		} catch (IOException e) {
 			throw Networking.unchecked(e);
 		}
@@ -249,7 +256,19 @@ public final class Parser {
 							.select("button.gray")
 			);
 
-			double difficulty = findDifficulty(body);
+			double difficulty = -1;
+			boolean postSolutionAvailable = false;
+
+			final String difficultyPrefix = "Difficulty: ";
+			for(Element font : body.children().select("p:not([*])").select("font[color=\"gray\"]")) {
+				String text = font.text();
+
+				if(text.startsWith(difficultyPrefix)) {
+					difficulty = Double.parseDouble(text.substring(difficultyPrefix.length()));
+				} else if(text.equals("Post-solution available")) {
+					postSolutionAvailable = true;
+				}
+			}
 
 			return new Problem(
 					id,
@@ -259,7 +278,8 @@ public final class Parser {
 					description,
 					tests,
 					difficulty,
-					hint
+					hint,
+					postSolutionAvailable
 			);
 		} catch (Exception e) {
 			try {
@@ -308,24 +328,6 @@ public final class Parser {
 				StandardCharsets.UTF_8);
 	}
 
-	private static double findDifficulty(Element body) {
-		final String prefix = "Difficulty: ";
-
-		for(Element p : body.children().select("p:not([*])")) {
-			Elements fonts = p.select("font[color=\"gray\"]");
-			for(Element font : fonts) {
-				String text = font.text();
-
-
-				if(text.startsWith(prefix)) {
-					return Double.parseDouble(text.substring(prefix.length()));
-				}
-			}
-		}
-
-		return -1;
-	}
-
 	private static String sanitizeInput(String input) {
 		input = input.trim();
 		if(input.charAt(0) != '(') {
@@ -355,10 +357,10 @@ public final class Parser {
 	}
 
 	public static void main(String[] args) throws IOException {
-		Parser parser = new Parser(4,
+		Parser parser = new Parser(6,
 				Path.of("data/problemIDs.txt"),
 				Path.of("data/problems.json5"),
-				Path.of("data/problems.bin")
+				Path.of("data/problems.bin.gz")
 		);
 		parser.run();
 	}

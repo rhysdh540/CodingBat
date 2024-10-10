@@ -50,6 +50,12 @@ other stuff:
   - https://codingbat.com/prob/p1 is the exception
 - ranges:
   - p000000-p099999 is empty
-  - p100000-p199999 is very sparse
+  - p100000-p199999 is very sparse - contains all of the official problems plus these 6:
+    - p101217
+    - p109483
+    - p126345
+    - p141371
+    - p156549
+    - p196933
   - p299999 and above are empty
     - with the exception of p375379 for some reason

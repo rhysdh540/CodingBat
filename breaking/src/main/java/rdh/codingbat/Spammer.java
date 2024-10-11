@@ -60,9 +60,16 @@ public final class Spammer {
 			.forEach(foundProblems::add);
 
 		for(int j = 0; j < numThreads; j++) {
-			Thread thread = new Thread(group, this::runTask);
-			thread.setName("Spammer-" + j);
-			thread.start();
+
+			Thread.ofPlatform()
+					.name("Spammer-" + j)
+					.group(group)
+					.uncaughtExceptionHandler((t, e) -> {
+						System.err.println("Error in thread " + t.getName());
+						e.printStackTrace();
+						group.interrupt();
+					})
+					.start(this::runTask);
 		}
 
 		while(group.activeCount() > 0) {

@@ -4,11 +4,9 @@ import java.io.ObjectInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.zip.GZIPInputStream;
@@ -20,19 +18,14 @@ public class Main {
 
 		System.out.println(problems.size() + " problems loaded");
 
-
-		var result = problems.stream()
-				.parallel()
-//				.filter(Problem::isOfficial)
-//				.filter(p -> p.id() > 200_000)
+		var result = problems.stream().parallel()
 				.filter(Predicate.not(Problem::isOfficial))
-				.filter(p -> p.id() < 200_000)
+				.filter(p -> p.language() == Problem.Language.JAVA)
+				.filter(p -> p.name().startsWith("apcsa"))
 				.toList();
 
 		System.out.println(result.size() + " problems found");
-		for(Problem p : result) {
-			printProblemAndUrl(p);
-		}
+		result.forEach(Main::printProblemAndUrl);
 	}
 
 	private static void printProblemAndUrl(Problem p) {

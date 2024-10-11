@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Field;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -32,8 +31,6 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.Deflater;
-import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -92,14 +89,15 @@ public final class Parser {
 		Runtime.getRuntime().addShutdownHook(shutdownHook);
 
 		for(int i = 0; i < numThreads; i++) {
-			Thread thread = new Thread(group, this::runTask);
-			thread.setName("Spammer-" + i);
-			thread.setUncaughtExceptionHandler((t, e) -> {
-				System.err.println("Error in thread " + t.getName());
-				e.printStackTrace();
-				group.interrupt();
-			});
-			thread.start();
+			Thread.ofPlatform()
+					.name("Parser-" + i)
+					.group(group)
+					.uncaughtExceptionHandler((t, e) -> {
+						System.err.println("Error in thread " + t.getName());
+						e.printStackTrace();
+						group.interrupt();
+					})
+					.start(this::runTask);
 		}
 
 		while(group.activeCount() > 0) {

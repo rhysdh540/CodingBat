@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.SequencedMap;
 
@@ -40,7 +41,7 @@ public record Problem(
 		return String.format(
 				"%sProblem[id=%s; \"%s\"]",
 				language,
-				Networking.formatProblemNumber(id),
+				formatNumber(id),
 				nameAndCategory()
 		);
 	}
@@ -49,11 +50,24 @@ public record Problem(
 		return (category == null ? "" : category + " ") + name;
 	}
 
+	/**
+	 * Only the official problems will have their category set.
+	 */
 	public boolean isOfficial() {
 		return category != null;
 	}
 
 	public String url() {
 		return Networking.makeUrl(id).toString();
+	}
+
+	public static String formatNumber(int number) {
+		if (number < 1 || number >= 1000000) {
+			throw new IllegalArgumentException("Problem number must be in range [1, 1000000)");
+		}
+		String s = Integer.toString(number);
+		char[] c = new char[6 - s.length()];
+		Arrays.fill(c, '0');
+		return new String(c) + s;
 	}
 }

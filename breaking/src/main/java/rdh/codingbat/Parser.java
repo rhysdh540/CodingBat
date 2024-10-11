@@ -23,12 +23,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.SequencedMap;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
@@ -150,7 +150,7 @@ public final class Parser {
 
 		try(GZIPOutputStream gzos = new GZIPOutputStream(Files.newOutputStream(outputBin))) {
 			try(ObjectOutputStream oos = new ObjectOutputStream(gzos)) {
-				oos.writeObject(new ConcurrentSkipListSet<>(foundProblems.values()));
+				oos.writeObject(new LinkedHashSet<>(foundProblems.values()));
 			}
 		} catch (IOException e) {
 			throw Networking.unchecked(e);

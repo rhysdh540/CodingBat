@@ -27,6 +27,9 @@ tasks.register<JavaExec>("runMain") {
     group = "run"
     mainClass = "rdh.codingbat.Main"
     classpath = sourceSets["main"].runtimeClasspath
+
+    environment("codingbat.sessionId", "")
+    environment("codingbat.email", "")
 }
 
 repositories {

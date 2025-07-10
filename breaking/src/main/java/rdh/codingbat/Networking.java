@@ -1,5 +1,8 @@
 package rdh.codingbat;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -7,6 +10,11 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public final class Networking {
 	public static final String USER_AGENT = "CodingBatSpammer/1.0 (https://github.com/rhysdh540/CodingBat - sorry for any problems!)";
@@ -31,8 +39,36 @@ public final class Networking {
 			return connection.getInputStream();
 		} catch (SocketTimeoutException e) {
 			// we may have ddosed the codingbat server by accident, stop to be nice
-			System.err.println("\nTimeout on problem " + problemNumber);
-			throw e;
+			throw new IOException("Timeout on problem fetch; problem " + problemNumber, e);
+		}
+	}
+
+	private static final DateTimeFormatter urlFormatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
+
+	public static InputStream sendCode(Problem problem, @NotNull String code, @NotNull String email, @Nullable String sessionId)
+			throws IOException {
+		String req = "https://codingbat.com/run" +
+				"?id=p" + Problem.formatNumber(problem.id()) +
+				"&code=" + URLEncoder.encode(code, StandardCharsets.UTF_8) +
+				"&cuname=" + URLEncoder.encode(email, StandardCharsets.UTF_8) +
+				"&owner=" +
+				"&date=662394817" + // TODO: what is this?
+				"&adate=" +
+				ZonedDateTime.now(ZoneOffset.UTC).format(urlFormatter) + "z";
+
+		try {
+			URL url = URI.create(req).toURL();
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			if(sessionId != null) {
+				connection.setRequestProperty("Cookie", "JSESSIONID=" + sessionId);
+			}
+			connection.connect();
+
+			return connection.getInputStream();
+		} catch (SocketTimeoutException e) {
+			throw new IOException("Timeout on code submission; problem " + problem.id(), e);
 		}
 	}
 

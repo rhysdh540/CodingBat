@@ -3,16 +3,8 @@ package rdh.codingbat;
 import rdh.codingbat.Problem.Language;
 
 import java.io.ObjectInputStream;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,56 +19,10 @@ public class Main {
 
 		System.out.println(problems.size() + " problems loaded");
 		problems.parallelStream()
-				.filter(p -> p.tests().isEmpty())
-
-				.forEach(p -> {
-					postEmptyProblem(p);
-					System.out.println("Posted " + p.id() + " (" + p.url() + ")");
-				});
-	}
-
-	private static void postEmptyProblem(Problem p) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss");
-
-		StringBuilder urlBuilder = new StringBuilder("https://codingbat.com/run");
-		urlBuilder.append("?id=p").append(Problem.formatNumber(p.id()));
-		urlBuilder.append("&code=");
-		if(p.language() == Language.PYTHON) {
-			if(p.name().isEmpty()) {
-				System.out.println("Skipping " + p.id() + " because it has no name and is python");
-				return;
-			}
-
-			// java problems can be passed with no code
-			urlBuilder.append(
-					URLEncoder.encode("def " + p.name() + "():\n  pass", StandardCharsets.UTF_8)
-			);
-		}
-
-		urlBuilder.append("&cuname=");
-		urlBuilder.append(URLEncoder.encode(System.getenv("codingbat.email"), StandardCharsets.UTF_8));
-		urlBuilder.append("&owner=&date=662394817&adate=");
-		ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);
-		urlBuilder.append(now.format(formatter)).append("z");
-
-		try {
-			URL url = URI.create(urlBuilder.toString()).toURL();
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-			connection.setRequestProperty("Cookie", "JSESSIONID=" + System.getenv("codingbat.sessionId"));
-			connection.connect();
-
-			int responseCode = connection.getResponseCode();
-			String responseMessage = new String(connection.getInputStream().readAllBytes());
-
-			if(responseCode != 200 || responseMessage.startsWith("Error:")) {
-				System.out.println("Failed to post " + p.id() + " (response code " + responseCode + ")");
-				System.out.println("  " + responseMessage);
-			}
-		} catch (Throwable e) {
-			throw Networking.unchecked(e);
-		}
+				.filter(p -> p.language() == Language.PYTHON)
+				.filter(p -> p.name().isEmpty())
+//				.limit(24)
+				.forEach(Main::printProblemAndUrl);
 	}
 
 	private static void printProblemAndUrl(Problem p) {

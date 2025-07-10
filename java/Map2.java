@@ -56,10 +56,13 @@ public class Map2 {
 	 * in the array, append the string to the result. Return the empty string if no string appears a 2nd time.
 	 */
 	public String wordAppend(String[] strings) {
-		Map<String, Integer> map = new HashMap<>();
-		return Arrays.stream(strings)
-				.filter(s -> map.merge(s, 1, Integer::sum) % 2 == 0) // update map and filter if even
-				.collect(Collectors.joining());
+		return (String) Arrays.stream(strings).reduce(
+				new Object[]{new HashMap<>(), ""},
+				(a, s) -> new Object[]{a[0],
+						a[1] + (((Map<String, Integer>) a[0]).merge(s, 1, Integer::sum) % 2 == 0 ? s : "")
+				},
+				(a, b) -> a
+		)[1];
 	}
 
 	/**
@@ -77,13 +80,12 @@ public class Map2 {
 	 * anything. Using a map, this can be solved making just one pass over the array. More difficult than it looks.
 	 */
 	public String[] allSwap(String[] strings) {
-		Map<Character, Integer> map = new HashMap<>();
-		java.util.stream.IntStream.range(0, strings.length).forEach(i ->
-				map.compute(strings[i].charAt(0), (k, v) -> {
+		java.util.stream.IntStream.range(0, strings.length).boxed()
+				.collect(HashMap<Character, Integer>::new, (map, i) -> map.compute(strings[i].charAt(0), (k, v) -> {
 					if(v == null) return i;
 					Collections.swap(Arrays.asList(strings), i, v);
 					return null;
-				}));
+				}), (a, b) -> {});
 		return strings;
 	}
 
@@ -95,13 +97,12 @@ public class Map2 {
 	 * this can be solved making just one pass over the array. More difficult than it looks.
 	 */
 	public String[] firstSwap(String[] strings) {
-		Map<Character, Integer> map = new HashMap<>();
-		java.util.stream.IntStream.range(0, strings.length).forEach(i ->
-				map.compute(strings[i].charAt(0), (key, value) -> {
-					if(value == null) return i;
-					Collections.swap(Arrays.asList(strings), i, value == -1 ? i : value); // swap with itself if already swapped
+		java.util.stream.IntStream.range(0, strings.length).boxed()
+				.collect(HashMap<Character, Integer>::new, (map, i) -> map.compute(strings[i].charAt(0), (k, v) -> {
+					if(v == null) return i;
+					Collections.swap(Arrays.asList(strings), i, v < 0 ? i : v); // swap with itself if already swapped
 					return -1;
-				}));
+				}), (a, b) -> {});
 		return strings;
 	}
 }

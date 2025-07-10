@@ -42,6 +42,7 @@ public final class Parser {
 	private final Map<Integer, Problem> foundProblems = new ConcurrentSkipListMap<>();
 	private final ThreadGroup group = new ThreadGroup("Parsers");
 
+	@SuppressWarnings("unchecked")
 	public Parser(int numThreads, Path input, Path outputJson, Path outputBin) {
 		this.numThreads = numThreads;
 		this.outputJson = outputJson;

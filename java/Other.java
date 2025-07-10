@@ -75,11 +75,11 @@ public class Other {
 	public String string_mockingText(String str) {
 		boolean[] upper = {true};
 		return str.chars()
-				.mapToObj(c -> String.valueOf((char)
+				.mapToObj(c -> "" + (char)
 						(Character.isLetter(c) && (upper[0] = !upper[0])
 								? Character.toUpperCase(c)
 								: Character.toLowerCase(c)
-						)))
+						))
 				.collect(Collectors.joining());
 	}
 

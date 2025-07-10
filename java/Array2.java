@@ -362,7 +362,7 @@ public class Array2 {
 				.mapToObj(i -> i % 3 == 0 && i % 5 == 0 ? "FizzBuzz" :
 						i % 3 == 0 ? "Fizz" :
 								i % 5 == 0 ? "Buzz" :
-										String.valueOf(i))
+										i + "")
 				.toArray(String[]::new);
 	}
 }

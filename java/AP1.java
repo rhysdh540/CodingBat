@@ -86,7 +86,7 @@ public class AP1 {
 	 * Note: use % to get the rightmost digit, and / to discard the rightmost digit.
 	 */
 	public boolean dividesSelf(int n) {
-		return String.valueOf(n).chars()
+		return (n + "").chars()
 				.allMatch(c -> c != '0' && n % (c - '0') == 0);
 	}
 
@@ -109,7 +109,7 @@ public class AP1 {
 	 */
 	public int[] copyEndy(int[] nums, int count) {
 		return Arrays.stream(nums)
-				.filter(i -> i >= 0 && i <= 10 || i >= 90 && i <= 100)
+				.filter(i -> i % 90 < 11)
 				.limit(count)
 				.toArray();
 	}

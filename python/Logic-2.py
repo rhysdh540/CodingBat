@@ -6,7 +6,7 @@ def make_bricks(small, big, goal):
     This is a little harder than it looks and can be done without any loops.
     See also: Introduction to MakeBricks (https://codingbat.com/doc/practice/makebricks-introduction.html)
     """
-    return goal % 5 <= small and goal - (big * 5) <= small
+    return small >= max(goal % 5, goal - (big * 5))
 
 
 def lone_sum(a, b, c):
@@ -65,4 +65,7 @@ def make_chocolate(small, big, goal):
     Return the number of small bars to use, assuming we always use big bars before small bars.
     Return -1 if it can't be done.
     """
-    return -1 if goal > big * 5 + small or goal % 5 > small else goal % 5 if goal < 10 else goal - big * 5
+    return max(goal % 5, goal - big * 5) if max(goal % 5, goal - big * 5) <= small else -1
+
+    # if codingbat was cool and had a new version of python:
+    #return n if (n := max(goal % 5, goal - big * 5)) <= small else -1

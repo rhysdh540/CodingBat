@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 @SuppressWarnings("unused")
 public class Logic2 {
 	/**
@@ -10,7 +8,15 @@ public class Logic2 {
 	 * @see <a href="https://codingbat.com/doc/practice/makebricks-introduction.html">Introduction to MakeBricks</a>
 	 */
 	public boolean makeBricks(int small, int big, int goal) {
-		return goal <= big * 5 + small && goal % 5 <= small;
+		// if we have "enough" big bricks:
+		// goal / 5 is the number of big bricks we can use, so goal % 5 is the leftover
+
+		// if we don't have enough, we'd use all of them (so big * 5 inches),
+		// so the leftover is goal - big * 5
+		// this could be <0 though (if we have too many big bricks), so we take the max of the two
+
+		// and just compare with small
+		return small >= Math.max(goal % 5, goal - big * 5);
 	}
 
 	/**
@@ -18,7 +24,7 @@ public class Logic2 {
 	 * if one of the values is the same as another of the values, it does not count towards the sum.
 	 */
 	public int loneSum(int a, int b, int c) {
-		return (a == b && b == c) ? 0
+		return a == b && b == c ? 0
 				: a == b ? c
 				: a == c ? b
 				: b == c ? a
@@ -66,7 +72,7 @@ public class Logic2 {
 
 	// required helper method
 	public int round10(int i) {
-		return 10 * ((i % 10 >= 5 ? (i + 10) : i) / 10);
+		return Math.round(i / 10.0f) * 10;
 	}
 
 	/**
@@ -84,10 +90,7 @@ public class Logic2 {
 	 * Return 0 if they both go over.
 	 */
 	public int blackjack(int a, int b) {
-		return a > 21 && b > 21 ? 0
-				: a > 21 ? b
-				: b > 21 ? a
-				: Math.max(a, b);
+		return Math.max(a > 21 ? 0 : a, b > 21 ? 0 : b);
 	}
 
 	/**
@@ -96,10 +99,9 @@ public class Logic2 {
 	 * is the same as the difference between medium and large.
 	 */
 	public boolean evenlySpaced(int a, int b, int c) {
-		return (a == b) == (b == c) &&
-				((Math.abs(a - b) == Math.abs(b - c))
-			  || (Math.abs(a - b) == Math.abs(a - c))
-			  || (Math.abs(c - b) == Math.abs(a - c)));
+		// smallest + largest == 2 * middle
+		return Math.min(a, Math.min(b, c)) + Math.max(a, Math.max(b, c))
+				== 2 * Math.max(Math.min(a, b), Math.min(Math.max(a, b), c));
 	}
 
 	/**
@@ -108,8 +110,8 @@ public class Logic2 {
 	 * Return -1 if it can't be done.
 	 */
 	public int makeChocolate(int small, int big, int goal) {
-		return goal > big * 5 + small || goal % 5 > small ? -1
-				: goal < 10 ? goal % 5
-				: goal - (big * 5);
+		// slight hack to make this one line; we assign `big` to the number of small bars we need (see makeBricks)
+		// and then just a ternary
+		return small < (big = Math.max(goal % 5, goal - big * 5)) ? -1 : big;
 	}
 }

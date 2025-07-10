@@ -17,6 +17,13 @@ public class Logic2 {
 
 		// and just compare with small
 		return small >= Math.max(goal % 5, goal - big * 5);
+
+		// another way of thinking about it:
+		// the number of leftover will be (goal - <number of big we actually use> * 5)
+		// so to find the number of big we actually use, it will either be all of them (if we don't have enough)
+		// or the number of big we can use (goal / 5)
+		// so take the minimum of those two, and plug into the formula
+		// return goal - Math.min(big, goal / 5) * 5 <= small;
 	}
 
 	/**
@@ -24,11 +31,7 @@ public class Logic2 {
 	 * if one of the values is the same as another of the values, it does not count towards the sum.
 	 */
 	public int loneSum(int a, int b, int c) {
-		return a == b && b == c ? 0
-				: a == b ? c
-				: a == c ? b
-				: b == c ? a
-				: a + b + c;
+		return a == b && b == c ? 0 : a == b ? c : a == c ? b : b == c ? a : a + b + c;
 	}
 
 	/**

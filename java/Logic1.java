@@ -28,7 +28,8 @@ public class Logic1 {
 	 * Given an int temperature and a boolean isSummer, return true if the squirrels play and false otherwise.
 	 */
 	public boolean squirrelPlay(int temp, boolean isSummer) {
-		return (isSummer && temp > 59 && temp < 101) || (temp > 59 && temp < 91);
+		return isSummer && temp > 59 && temp < 101
+				|| temp > 59 && temp < 91;
 	}
 
 	/**
@@ -38,11 +39,7 @@ public class Logic1 {
 	 * the result is 2. Unless it is your birthday -- on that day, your speed can be 5 higher in all cases.
 	 */
 	public int caughtSpeeding(int speed, boolean isBirthday) {
-		return (isBirthday)
-					? (speed < 66) ? 0
-					: (speed < 86) ? 1 : 2
-				: (speed < 61) ? 0
-				: (speed < 81) ? 1 : 2;
+		return (speed -= isBirthday ? 5 : 0) < 61 ? 0 : speed < 81 ? 1 : 2;
 	}
 
 	/**
@@ -50,7 +47,7 @@ public class Logic1 {
 	 * are forbidden, so in that case just return 20.
 	 */
 	public int sortaSum(int a, int b) {
-		return (a + b > 9 && a + b < 20) ? 20 : a + b;
+		return a + b > 9 && a + b < 20 ? 20 : a + b;
 	}
 
 	/**
@@ -60,9 +57,10 @@ public class Logic1 {
 	 * Unless we are on vacation -- then on weekdays it should be "10:00" and weekends it should be "off".
 	 */
 	public String alarmClock(int day, boolean vacation) {
-		return (vacation)
-				? (day > 0 && day < 6) ? "10:00" : "off"
-				: (day > 0 && day < 6) ? "7:00" : "10:00";
+		//       SFTWTMS
+		// 65 is 1000001 in binary, and we get the `day`th bit from the right by shifting it
+		// so for example, if day is 0 (Sunday), we get 1, and if day is 1 (Monday), we get 0
+		return new String[]{"7:00", "10:00", "off"}[(65 >> day & 1) + (vacation ? 1 : 0)];
 	}
 
 	/**
@@ -96,7 +94,7 @@ public class Logic1 {
 	 * @see <a href="https://codingbat.com/doc/practice/mod-introduction.html">Introduction to Mod</a>
 	 */
 	public boolean more20(int n) {
-		return ((n % 20 - 1) & ~1) == 0;
+		return (n - 1) % 20 < 2;
 	}
 
 	/**
@@ -114,7 +112,7 @@ public class Logic1 {
 	 * @see <a href="https://codingbat.com/doc/practice/mod-introduction.html">Introduction to Mod</a>
 	 */
 	public boolean less20(int n) {
-		return ((n % 20 - 18) & ~1) == 0;
+		return (n + 2) % 20 < 2;
 	}
 
 	/**
@@ -124,7 +122,9 @@ public class Logic1 {
 	 * @see <a href="https://codingbat.com/doc/practice/mod-introduction.html">Introduction to Mod</a>
 	 */
 	public boolean nearTen(int num) {
-		return (num % 10 & 7) < 3;
+		// doing % 10 gives us the last digit, and it needs to be 8, 9, 0, 1, or 2
+		// doing % 8 turns 8 and 9 -> 0 and 1, so we can just check if that's less than 3
+		return num % 10 % 8 < 3;
 	}
 
 	/**
@@ -236,7 +236,7 @@ public class Logic1 {
 	 * Note: the % "mod" operator computes the remainder, e.g. 7 % 5 is 2.
 	 */
 	public int maxMod5(int a, int b) {
-		return (a == b) ? 0
+		return a == b ? 0
 				: (a - b) % 5 == 0 ? Math.min(a, b)
 				: Math.max(a, b);
 	}
@@ -247,9 +247,9 @@ public class Logic1 {
 	 * Otherwise so long as both b and c are different from a, the result is 1. Otherwise the result is 0.
 	 */
 	public int redTicket(int a, int b, int c) {
-		return (a == b && b == c)
-				? (a == 2) ? 10 : 5
-				: (a != b && a != c) ? 1 : 0;
+		return a == b && b == c
+				? 5 << a / 2 // (a/2) is 1 if a == 2 and 0 if a == 0 or 1; and 5 << 0 == 5, 5 << 1 == 10
+				: a != b && a != c ? 1 : 0;
 	}
 
 	/**
@@ -259,8 +259,9 @@ public class Logic1 {
 	 * If two of the numbers are the same, the result is 10.
 	 */
 	public int greenTicket(int a, int b, int c) {
-		return (a == b && b == c) ? 20
-				: (a == b || a == c || b == c) ? 10 : 0;
+		return a == b
+				? a == c ? 20 : 10
+				: a == c || b == c ? 10 : 0;
 	}
 
 	/**
@@ -271,8 +272,8 @@ public class Logic1 {
 	 * Otherwise the result is 0.
 	 */
 	public int blueTicket(int a, int b, int c) {
-		return (a + b == 10 || b + c == 10 || a + c == 10) ? 10
-				: (a + b == b + c + 10 || a + b == a + c + 10) ? 5 : 0;
+		return a + b == 10 || b + c == 10 || a + c == 10 ? 10
+				: a - c == 10 || b - c == 10 ? 5 : 0;
 	}
 
 	/**
@@ -281,10 +282,12 @@ public class Logic1 {
 	 * the right digit.)
 	 */
 	public boolean shareDigit(int a, int b) {
-		return a / 10 == b / 10
-				|| a / 10 == b % 10
-				|| a % 10 == b / 10
-				|| a % 10 == b % 10;
+		return (a + "").chars().anyMatch(c -> (b + "").indexOf(c) >= 0);
+		// if you don't want to convert to strings:
+		// return ((1 << a / 10 | 1 << a % 10) & (1 << b / 10 | 1 << b % 10)) > 0;
+		// this puts each digit of the number into a bitmask - so 25 would become 0000_0010 | 0001_0000
+		// and then we do a bitwise AND with the other number's bitmask
+		// and if any bits are shared, the result will be non-zero
 	}
 
 	/**

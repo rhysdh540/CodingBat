@@ -28,7 +28,7 @@ public class AP1 {
 	 */
 	public boolean scoresClump(int[] scores) {
 		return java.util.stream.IntStream.range(0, scores.length - 2)
-				.anyMatch(i -> scores[i + 2] - scores[i] <= 2);
+				.anyMatch(i -> scores[i + 2] - scores[i] < 3);
 	}
 
 	/**

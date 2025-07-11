@@ -10,7 +10,7 @@ public class Demo {
 	 */
 	public boolean arrayLike(int[] nums, int value) {
 		return Arrays.stream(nums)
-				.filter(n -> Math.abs(n - value) <= 2)
+				.filter(n -> Math.abs(n - value) < 3)
 				.count() >= (nums.length + 1) / 2;
 	}
 }

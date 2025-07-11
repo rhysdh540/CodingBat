@@ -147,7 +147,7 @@ public class Array2 {
 	 */
 	public int matchUp(int[] nums1, int[] nums2) {
 		return (int) java.util.stream.IntStream.range(0, nums1.length)
-				.filter(i -> Math.abs(nums1[i] - nums2[i]) <= 2 && nums1[i] != nums2[i])
+				.filter(i -> Math.abs(nums1[i] - nums2[i]) < 3 && nums1[i] != nums2[i])
 				.count();
 	}
 

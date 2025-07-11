@@ -252,7 +252,7 @@ public class Recursion1 {
 	 * string somewhere, possibly with overlapping. N will be non-negative.
 	 */
 	public boolean strCopies(String str, String sub, int n) {
-		return str.length() < sub.length() ? n <= 0 :
+		return str.length() < sub.length() ? n <= 1 :
 				(str.startsWith(sub) ? strCopies(str.substring(1), sub, n - 1) : strCopies(str.substring(1), sub, n));
 	}
 

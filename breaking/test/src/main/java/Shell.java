@@ -1,3 +1,0 @@
-public class Shell {
-	// nothing to see here...
-}

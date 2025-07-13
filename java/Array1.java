@@ -90,14 +90,14 @@ public class Array1 {
 	 * Given an int array length 2, return true if it contains a 2 or a 3.
 	 */
 	public boolean has23(int[] nums) {
-		return Arrays.stream(nums).anyMatch(i -> i == 2 || i == 3);
+		return Arrays.stream(nums).anyMatch(i -> i / 2 == 1);
 	}
 
 	/**
 	 * Given an int array length 2, return true if it does not contain a 2 or 3.
 	 */
 	public boolean no23(int[] nums) {
-		return Arrays.stream(nums).noneMatch(i -> i == 2 || i == 3);
+		return Arrays.stream(nums).noneMatch(i -> i / 2 == 1);
 	}
 
 	/**

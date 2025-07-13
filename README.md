@@ -10,8 +10,7 @@ The shortest solutions to [CodingBat](https://codingbat.com/) problems that I ca
 
 <details>
   <summary>About imports</summary>
-  
-  Imports in CodingBat are kind of weird, for example `java.util.stream.Collectors` is automatically imported
-  but `java.util.stream.IntStream` is not.
-  I'll use imports in my files for when CodingBat automatically imports it for you, otherwise I'll use FQNs.
+
+  CodingBat automatically imports `java.util.*` and `java.util.stream.Collectors`,
+  so for anything that's not those, i use fully qualified names.
 </details>

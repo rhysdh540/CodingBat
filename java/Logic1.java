@@ -7,7 +7,7 @@ public class Logic1 {
 	 * with the given values is successful, or false otherwise.
 	 */
 	public boolean cigarParty(int cigars, boolean isWeekend) {
-		return (isWeekend && cigars > 39) || (cigars > 39 && cigars < 61);
+		return cigars > 39 && (isWeekend || cigars < 61);
 	}
 
 	/**
@@ -28,8 +28,7 @@ public class Logic1 {
 	 * Given an int temperature and a boolean isSummer, return true if the squirrels play and false otherwise.
 	 */
 	public boolean squirrelPlay(int temp, boolean isSummer) {
-		return isSummer && temp > 59 && temp < 101
-				|| temp > 59 && temp < 91;
+		return temp > 59 && temp < (isSummer ? 101 : 91);
 	}
 
 	/**
@@ -47,7 +46,7 @@ public class Logic1 {
 	 * are forbidden, so in that case just return 20.
 	 */
 	public int sortaSum(int a, int b) {
-		return a + b > 9 && a + b < 20 ? 20 : a + b;
+		return (a += b) > 9 && a < 20 ? 20 : a;
 	}
 
 	/**
@@ -297,6 +296,6 @@ public class Logic1 {
 	 * the string.)
 	 */
 	public int sumLimit(int a, int b) {
-		return (a + b + "").length() == (a + "").length() ? a + b : a;
+		return (a + "").length() == ((b += a) + "").length() ? b : a;
 	}
 }

@@ -132,7 +132,7 @@ public class Warmup2 {
 	 */
 	public boolean noTriples(int[] nums) {
 		return java.util.stream.IntStream.rangeClosed(0, nums.length - 3)
-				.noneMatch(i -> nums[i] == nums[i + 1] && nums[i + 1] == nums[i + 2]);
+				.allMatch(i -> nums[i] != nums[i + 1] || nums[i + 1] != nums[i + 2]);
 	}
 
 	/**

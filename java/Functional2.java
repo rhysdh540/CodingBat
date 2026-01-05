@@ -15,7 +15,7 @@ public class Functional2 {
 	 * (Note: % by 10)
 	 */
 	public List<Integer> no9(List<Integer> nums) {
-		return nums.stream().filter(n -> n % 10 != 9).collect(Collectors.toList());
+		return nums.stream().filter(n -> n % 10 < 9).collect(Collectors.toList());
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class Functional2 {
 	 * Given a list of strings, return a list of the strings, omitting any string length 3 or 4.
 	 */
 	public List<String> no34(List<String> strings) {
-		return strings.stream().filter(s -> s.length() != 3 && s.length() != 4).collect(Collectors.toList());
+		return strings.stream().filter(s -> s.length() < 3 || s.length() > 4).collect(Collectors.toList());
 	}
 
 	/**
@@ -68,6 +68,6 @@ public class Functional2 {
 	 * omitting any of the resulting numbers that end in 5 or 6.
 	 */
 	public List<Integer> square56(List<Integer> nums) {
-		return nums.stream().map(n -> n * n + 10).filter(n -> n % 10 != 5 && n % 10 != 6).collect(Collectors.toList());
+		return nums.stream().map(n -> n * n + 10).filter(n -> (n %= 10) > 6 || n < 5).collect(Collectors.toList());
 	}
 }

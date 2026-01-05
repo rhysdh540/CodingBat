@@ -8,7 +8,7 @@ public class Array2 {
 	 * Note: the % "mod" operator computes the remainder, e.g. 5 % 2 is 1.
 	 */
 	public int countEvens(int[] nums) {
-		return (int) Arrays.stream(nums).filter(i -> i % 2 == 0).count();
+		return -Arrays.stream(nums).map(i -> i % 2 - 1).sum();
 	}
 
 	/**
@@ -68,7 +68,8 @@ public class Array2 {
 	 * Given an array of ints, return true if the array contains no 1's and no 3's.
 	 */
 	public boolean lucky13(int[] nums) {
-		return Arrays.stream(nums).noneMatch(i -> i == 1 || i == 3);
+		// regex: anything, 1 or 3, anything
+		return !Arrays.toString(nums).matches(".*[13].*");
 	}
 
 	/**
@@ -120,7 +121,7 @@ public class Array2 {
 	 * Given an array of ints, return true if it contains no 1's or it contains no 4's.
 	 */
 	public boolean no14(int[] nums) {
-		return Arrays.stream(nums).noneMatch(i -> i == 1) || Arrays.stream(nums).noneMatch(i -> i == 4);
+		return Arrays.stream(nums).allMatch(i -> i != 1) || Arrays.stream(nums).allMatch(i -> i != 4);
 	}
 
 	/**

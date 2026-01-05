@@ -101,7 +101,7 @@ public class Other {
 	public int[] array_optimusPrime(int num){
 		return java.util.stream.IntStream.rangeClosed(2, num)
 				.filter(i -> java.util.stream.IntStream.rangeClosed(2, (int) Math.sqrt(i))
-						.noneMatch(j -> i % j == 0))
+						.allMatch(j -> i % j != 0))
 				.toArray();
 	}
 

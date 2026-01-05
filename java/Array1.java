@@ -97,7 +97,7 @@ public class Array1 {
 	 * Given an int array length 2, return true if it does not contain a 2 or 3.
 	 */
 	public boolean no23(int[] nums) {
-		return Arrays.stream(nums).noneMatch(i -> i / 2 == 1);
+		return Arrays.stream(nums).allMatch(i -> i / 2 != 1);
 	}
 
 	/**

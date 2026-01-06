@@ -56,9 +56,8 @@ public class Warmup2 {
 	 * and also as the last 2 chars of the string, so "hixxxhi" yields 1 (we won't count the end substring).
 	 */
 	public int last2(String str) {
-		return java.util.stream.IntStream.rangeClosed(0, str.length() - 3)
-				.map(i -> str.substring(i, i + 2).equals(str.substring(str.length() - 2))
-						? 1 : 0)
+		return java.util.stream.IntStream.range(0, str.length() - 2)
+				.map(i -> str.startsWith(str.substring(str.length() - 2), i) ? 1 : 0)
 				.sum();
 	}
 
@@ -66,7 +65,7 @@ public class Warmup2 {
 	 * Given an array of ints, return the number of 9's in the array.
 	 */
 	public int arrayCount9(int[] nums) {
-		return (int) Arrays.stream(nums).filter(i -> i == 9).count();
+		return Arrays.stream(nums).map(i -> i == 9 ? 1 : 0).sum();
 	}
 
 	/**

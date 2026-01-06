@@ -144,7 +144,7 @@ public class String1 {
 	 * The string length will be at least 2.
 	 */
 	public String twoChar(String str, int index) {
-		return index + 2 > str.length() || index < 0 ? str.substring(0, 2) : str.substring(index, index + 2);
+		return str.substring(index = index < 0 || index + 2 > str.length() ? 0 : index, index + 2);
 	}
 
 	/**

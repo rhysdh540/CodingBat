@@ -160,8 +160,7 @@ public class Warmup1 {
 	 * Otherwise, return the string unchanged.
 	 */
 	public String delDel(String str) {
-		//regex: '^' matches start of string, '.' matches any character, then 'del' matches itself
-		return str.length() < 2 ? str : str.replaceFirst("^.del", str.charAt(0) + "");
+		return str.startsWith("del", 1) ? str.replaceFirst("del", "") : str;
 	}
 
 	/**
@@ -177,7 +176,7 @@ public class Warmup1 {
 	 * and include the second only if it is 'z', so "ozymandias" yields "oz".
 	 */
 	public String startOz(String str) {
-		return (str.startsWith("o") ? "o" : "") + (str.length() > 1 && str.charAt(1) == 'z' ? "z" : "");
+		return (str.startsWith("o") ? "o" : "") + (str.startsWith("z", 1) ? "z" : "");
 	}
 
 	/**
@@ -215,7 +214,7 @@ public class Warmup1 {
 	 */
 	public boolean stringE(String str) {
 		//regex: '[^e]' matches any character that is not 'e', so the result of replacing all non-'e' characters with nothing yields a string of only 'e's
-		return !str.replaceAll("[^e]", "").isEmpty() && str.replaceAll("[^e]", "").length() < 4;
+		return !(str = str.replaceAll("[^e]", "")).isEmpty() && str.length() < 4;
 	}
 
 	/**

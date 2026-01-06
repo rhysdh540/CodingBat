@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
@@ -127,6 +128,7 @@ public class String2 {
 	 */
 	public String getSandwich(String str) { // definitely a way to use regex here but I don't know how
 		return str.indexOf("bread") == str.lastIndexOf("bread") ? "" : str.substring(str.indexOf("bread") + 5, str.lastIndexOf("bread"));
+//		return str.replaceAll(".*bread(.*)bread.*", "$1");
 	}
 
 	/**
@@ -172,14 +174,9 @@ public class String2 {
 	 * replaced by pluses ("+"), except for appearances of the word string which are preserved unchanged.
 	 */
 	public String plusOut(String str, String word) {
-		//regex: (?!(%s)) matches anything but word
-		// the whole stream thing makes it so it will match anywhere from the middle of the string too (so if word is "xy" then it will match "xy" and "y")
-		// the . at the end is the thing we are replacing with the +
-		return str.replaceAll(String.format("(?!(%s)).",
-				java.util.stream.IntStream.range(0, word.length())
-						.mapToObj(i -> word.substring(i)
-								.replace("+", "\\+")) // escape +
-						.collect(Collectors.joining("|"))), "+");
+		return Arrays.stream(str.split(word.replace("+", "\\+"), -1))
+				.map(s -> s.replaceAll(".", "+"))
+				.collect(Collectors.joining(word));
 	}
 
 	/**

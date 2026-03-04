@@ -23,7 +23,7 @@ def lucky_sum(a, b, c):
     However, if one of the values is 13 then it does not count towards the sum and values to its right do not count.
     So for example, if b is 13, then both b and c do not count.
     """
-    return a + b + c if 13 not in (a, b, c) else 0 if a == 13 else a if b == 13 else a + b
+    return sum([a, b, c][:([a, b, c].index(13) if 13 in [a, b, c] else 3)])
 
 
 def no_teen_sum(a, b, c):
@@ -35,7 +35,7 @@ def no_teen_sum(a, b, c):
     (i.e. "decomposition"). Define the helper below and at the same indent level as the main no_teen_sum().
     """
     # no thank you i will not write fix_teen
-    return sum([x for x in [a, b, c] if x not in range(13, 20) or x in [15, 16]])
+    return sum(x for x in [a, b, c] if x in [15, 16] or x < 13 or x > 19)
 
 
 def round_sum(a, b, c):
@@ -46,7 +46,7 @@ def round_sum(a, b, c):
     write a separate helper "def round10(num):" and call it 3 times. Write the helper entirely below and
     at the same indent level as round_sum().
     """
-    return int(sum([round(x, -1) for x in [a, b, c]]))
+    return int(sum(round(x, -1) for x in [a, b, c]))
 
 
 def close_far(a, b, c):
@@ -55,7 +55,7 @@ def close_far(a, b, c):
     while the other is "far", differing from both other values by 2 or more.
     Note: abs(num) computes the absolute value of a number.
     """
-    return abs(a - b) <= 1 and abs(a - c) >= 2 and abs(b - c) >= 2 or abs(a - c) <= 1 and abs(a - b) >= 2 and abs(b - c) >= 2
+    return abs(b - c) > 1 and (abs(a - b) < 2) ^ (abs(a - c) < 2)
 
 
 def make_chocolate(small, big, goal):

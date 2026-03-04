@@ -58,7 +58,7 @@ public class Warmup1 {
 	 * Except if the parameter "negative" is true, then return true only if both are negative.
 	 */
 	public boolean posNeg(int a, int b, boolean negative) {
-		return negative ? a < 0 && b < 0 : a < 0 ^ b < 0;
+		return negative ? a < 0 && b < 0 : a * b < 0;
 	}
 
 	/**

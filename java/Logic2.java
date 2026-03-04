@@ -84,8 +84,7 @@ public class Logic2 {
 	 * Note: Math.abs(num) computes the absolute value of a number.
 	 */
 	public boolean closeFar(int a, int b, int c) {
-		return Math.abs(a - b) < 2 && Math.abs(a - c) >= 2 && Math.abs(b - c) > 1
-				|| Math.abs(a - c) < 2 && Math.abs(a - b) > 1 && Math.abs(b - c) > 1;
+		return Math.abs(b - c) > 1 && (Math.abs(a - b) < 2 ^ Math.abs(a - c) < 2);
 	}
 
 	/**

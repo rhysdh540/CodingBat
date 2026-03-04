@@ -28,7 +28,7 @@ def squirrel_play(temp, is_summer):
     Unless it is summer, then the upper limit is 100 instead of 90.
     Given an int temperature and a boolean is_summer, return True if the squirrels play and False otherwise.
     """
-    return temp >= 60 and (temp <= 90 or is_summer and temp <= 100)
+    return 60 <= temp <= 90 + 10 * is_summer
 
 
 def caught_speeding(speed, is_birthday):
@@ -59,7 +59,7 @@ def alarm_clock(day, vacation):
     Weekdays, the alarm should be "7:00" and on the weekend it should be "10:00".
     Unless we are on vacation -- then on weekdays it should be "10:00" and weekends it should be "off".
     """
-    return "off" if vacation and (day == 0 or day == 6) else "10:00" if vacation or day == 0 or day == 6 else "7:00"
+    return "off" if vacation and day % 6 == 0 else "10:00" if vacation or day % 6 == 0 else "7:00"
 
 
 def love6(a, b):
@@ -76,7 +76,7 @@ def in1to10(n, outside_mode):
     Unless outside_mode is True, in which case return True if the number is less or equal to 1,
     or greater or equal to 10.
     """
-    return not 1 < n < 10 if outside_mode else 1 <= n <= 10
+    return n < 2 or n > 9 if outside_mode else 0 < n < 11
 
 
 def near_ten(num):

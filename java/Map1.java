@@ -32,11 +32,9 @@ public class Map1 {
 	 */
 	public Map<String, String> mapAB(Map<String, String> map) {
 		// or just:
-		// if(map.containsKey("a") && map.containsKey("b"))
-		// 	map.put("ab", map.get("a") + map.get("b"));
-		map.computeIfPresent("a", (k, v) ->
-				map.computeIfPresent("b", (k2, v2) ->
-						map.put("ab", v + v2) == null ? v2 : v2) == v ? v : v);
+		 if(map.containsKey("a") && map.containsKey("b")) {
+			 map.put("ab", map.get("a") + map.get("b"));
+		 }
 		return map;
 	}
 

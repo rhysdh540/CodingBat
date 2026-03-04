@@ -3,7 +3,7 @@ def count_evens(nums):
     Return the number of even ints in the given array.
     Note: the % "mod" operator computes the remainder, e.g. 5 % 2 is 1.
     """
-    return len([x for x in nums if x % 2 == 0])
+    return sum(x % 2 < 1 for x in nums)
 
 
 def big_diff(nums):
@@ -30,7 +30,7 @@ def sum13(nums):
     Return the sum of the numbers in the array, returning 0 for an empty array.
     Except the number 13 is very unlucky, so it does not count and numbers that come immediately after a 13 also do not count.
     """
-    return sum([nums[i] for i in range(len(nums)) if nums[i] != 13 and (i == 0 or nums[i - 1] != 13)])
+    return sum(n for i, n in enumerate(nums) if n != 13 and (i < 1 or nums[i - 1] != 13))
 
 
 def sum67(nums):
@@ -55,7 +55,6 @@ def has22(nums):
     """
     Given an array of ints, return True if the array contains a 2 next to a 2 somewhere.
     """
-    # return reduce(lambda x, y: x or y, [nums[i] == nums[i + 1] == 2 for i in range(len(nums) - 1)], False)
     return reduce(
         lambda x, y: x or y,
         [nums[i] == nums[i + 1] == 2 for i in range(len(nums) - 1)],
